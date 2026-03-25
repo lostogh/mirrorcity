@@ -1,7 +1,7 @@
 let nameMap = {};
 
 async function loadNames() {
-  const res = await fetch("Names.json");
+  const res = await fetch("./Names.json");
   const data = await res.json();
 
   data.m_names.Array.forEach(n => {
@@ -10,22 +10,30 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch("str.json");
+  const res = await fetch("./str.json");
   const data = await res.json();
 
   const container = document.getElementById("content");
+  container.innerHTML = ""; // 초기화
 
-  data.slice(0, 300).forEach(line => { // ⭐ 렉 방지 (300 정도 추천)
+  data.slice(0, 1000).forEach(line => { // ⭐ 처음엔 1000 정도 추천
 
+    if (!line) return;
+
+    // 🔹 텍스트
+    let text = line.text || "";
+    if (!text) return;
+
+    // 🔹 이름
     let name = "나레이션";
 
-if (line.nameId && nameMap[line.nameId]) {
-  name = nameMap[line.nameId];
-} else if (line.nameId) {
-  name = "???"; // 또는 ID 표시도 가능
-}
+    if (line.nameId && nameMap[line.nameId]) {
+      name = nameMap[line.nameId];
+    } else if (line.nameId) {
+      name = "???";
+    }
 
-    // 태그 변환
+    // 🔹 태그 변환
     text = text
       .replace(/<name>/g, "[주인공]")
       .replace(/<i>/g, "<em>")
@@ -33,6 +41,7 @@ if (line.nameId && nameMap[line.nameId]) {
       .replace(/<color=#(.*?)>(.*?)<\/color>/g,
         '<span style="color:#$1">$2</span>');
 
+    // 🔹 HTML 생성
     const div = document.createElement("div");
     div.className = "line";
 
