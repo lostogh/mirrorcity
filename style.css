@@ -1,82 +1,27 @@
+/* =========================
+   기본 설정
+========================= */
 * {
   box-sizing: border-box;
 }
 
 body {
   background-image: url("img/Bg_Basic.png");
-  background-size: cover;        /* 🔥 화면 꽉 채움 + 비율 유지 */
-  background-position: center;   /* 가운데 기준 */
-  background-repeat: no-repeat;  /* 반복 제거 */
-  background-attachment: fixed;  /* 스크롤해도 고정 (선택) */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow-x: hidden;
   font-family: 'Pretendard', sans-serif;
 }
 
-.responsive-img {
-  max-width: 100%;
-  height: auto;
-
-  display: block;
-  margin: 20px auto; /* 위아래 여백 */
-
-  border-radius: 12px; /* 살짝 둥글게 (선택) */
-}
-
-/* 인덱스 전체 박스 */
-.index-box {
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 20px;
-
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-}
-
-/* 리스트 기본 제거 */
-.index-box ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* 각 항목 */
-.index-box li {
-  margin-bottom: 10px;
-}
-
-/* 인덱스 버튼 스타일 */
-.index-box a {
-  display: block;
-  text-decoration: none;
-
-  padding: 14px 18px;
-  border-radius: 10px;
-
-  color: #ffffff; /* 🔥 흰 글씨로 변경 (배경 어두움) */
-  font-weight: 700;
-
-  background-image: url("img/BG_System.png");
-  background-size: cover;        /* 꽉 채움 */
-  background-position: center;   /* 중앙 정렬 */
-
-  transition: 0.2s;
-}
-
-/* 인덱스 버튼 호버 */
-.index-box a:hover {
-  filter: brightness(1.1); /* 🔥 살짝 밝게 */
-}
-
-/* 클릭 후 보라색 방지 */
-.index-box a:visited {
-  color: #111827;
-}
-
+/* =========================
+   공통 컨테이너
+========================= */
 .content {
   max-width: 650px;
   margin: 40px auto;
-  padding: 0 12px; /* 🔥 margin 대신 padding */
+  padding: 0 12px;
 }
 
 .container {
@@ -84,13 +29,15 @@ body {
   justify-content: center;
 }
 
+/* =========================
+   검색창
+========================= */
 .search-box {
   display: flex;
   justify-content: center;
   margin-bottom: 25px;
 }
 
-/* 검색창 */
 .search-box input {
   width: 320px;
   padding: 10px 14px;
@@ -98,86 +45,89 @@ body {
   border-radius: 20px;
   outline: none;
   font-size: 14px;
-  transition: 0.2s;
 }
 
 .search-box input:focus {
   border-color: #666;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
 }
 
-/* 에피소드 타이틀 제목 */
+/* =========================
+   에피소드 헤더
+========================= */
 .episode-header {
   max-width: 650px;
   margin: 40px auto;
   padding: 30px 20px;
 
-  background-image: url("img/Bg_BtnPresent.png"); /* 🔥 이미지 경로 */
+  background-image: url("img/Bg_BtnPresent.png");
   background-size: cover;
   background-position: center;
 
   border-radius: 12px;
 }
 
-/* 제목 */
 .episode-header h1 {
   margin: 0 0 10px 0;
   font-size: 28px;
 }
 
-/* 설명 */
 .episode-header .desc {
   font-size: 14px;
   color: #374151;
 }
 
-/* 스크립트 카드 전체 박스*/
+/* =========================
+   스크립트 카드
+========================= */
 .script-card {
-  position: relative;
   margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.5);
   padding: 8px 0;
-  box-shadow: none;
   border-radius: 16px;
-  transition: all 0.2s ease;
 }
 
-/* 이름표 */
+/* =========================
+   이름표 (공통)
+========================= */
 .speaker {
   display: inline-block;
   padding: 6px 20px;
   border-radius: 999px;
   font-size: 12px;
-  margin-left: 32px; /* 🔥 왼쪽으로 밀기 */
+  margin-left: 32px;
   margin-bottom: 8px;
-}
 
-/* 🎭 나레이션 */
-div.speaker.narration {
-  background: #ffffff !important;
-  color: #aaaaaa !important;
-  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
-  font-style: italic;
   font-weight: 700;
 }
 
-/* 🧑 캐릭터 */
+/* =========================
+   🎭 나레이션
+========================= */
+.speaker.narration {
+  background: #ffffff;
+  color: #aaaaaa !important;
+  font-style: italic;
+}
+
+/* =========================
+   🧑 캐릭터
+========================= */
 .speaker.character {
   background: #5479c9;
   color: white;
-  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
-  font-weight: 700;
 }
 
-/* 🔥 기타 캐릭터 */
+/* =========================
+   기타 캐릭터
+========================= */
 .speaker.other {
-  background: #8f74bb;  /* 연보라 */
+  background: #8f74bb;
   color: white;
-  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
-  font-weight: 700;
 }
 
-/* 대사 출력칸 */
+/* =========================
+   대사 영역
+========================= */
 .line {
   font-size: 15px;
   line-height: 1.6;
@@ -185,113 +135,119 @@ div.speaker.narration {
 
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 
   padding: 14px 16px;
   border-radius: 14px;
 
-  border: 1px solid rgba(255,255,255,0.5);
-
-  box-shadow: none;
-
-  margin: 0 12px; /* 좌우 줄이기 */
+  margin: 0 12px;
 }
 
-/* 추가 대사 토글 작업*/
-
-.extra-script {
-  margin: 40px 0;
-  border-radius: 16px;
-  padding: 10px 16px;
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(6px);
-}
-
-.extra-script summary {
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 16px;
-  padding: 10px;
-}
-
-.extra-script[open] summary {
-  margin-bottom: 10px;
-}
-
-/* 선택지 */
+/* =========================
+   선택지
+========================= */
 .choice {
   background: #9eacb1;
   color: rgb(13, 24, 90);
+
   padding: 10px;
-  margin: 40px 80px;
+  margin: 10px 80px;
+
   border-radius: 8px;
   cursor: pointer;
+
+  text-align: center;
 }
 
 .choice:hover {
   background: #fafffe;
 }
 
-/* 아래가 폰 화면 옵션이었던가? */
-
-@media (max-width: 600px) {
-
-  .content {
-    margin: 40px 12px;
-  }
-
-  .script-card {
-    position: relative;
-    margin-bottom: 20px;
-
-    background: transparent; /* 🔥 이거 핵심 */
-    padding: 4px;              /* 🔥 여백 제거 */
-    border: none;
-  }
-
-  .speaker {
-    font-size: 14px;
-  }
-
-  .line {
-    font-size: 16px;   /* 🔥 중요 (글씨 키움) */
-    line-height: 1.8;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
+/* =========================
+   선택지 박스 제목 제거용
+   (JS에서 "선택지" 텍스트 추가 안 하는게 베스트)
+========================= */
+.choice-box-title {
+  display: none;
 }
 
+/* =========================
+   인덱스 버튼
+========================= */
+.index-box {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+}
+
+.index-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.index-box a {
+  display: block;
+  padding: 14px 18px;
+  border-radius: 10px;
+
+  color: #fff;
+  font-weight: 700;
+
+  background-image: url("img/BG_System.png");
+  background-size: cover;
+
+  text-decoration: none;
+}
+
+.index-box a:hover {
+  filter: brightness(1.1);
+}
+
+/* =========================
+   네비 버튼
+========================= */
 .nav-buttons {
   display: flex;
-  justify-content: center;  /* 🔥 가운데 정렬 */
-  gap: 12px;                /* 버튼 사이 간격 */
+  justify-content: center;
+  gap: 12px;
   margin: 30px 0;
 }
 
 .nav-buttons a {
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-
   padding: 8px 14px;
   border-radius: 10px;
 
   background: #2563eb;
   color: white;
 
-  transition: 0.2s;
+  text-decoration: none;
 }
 
-/* 🔥 클릭 후 보라색 방지 */
-.nav-buttons a:visited {
-  color: white;
-}
-
-/* hover */
 .nav-buttons a:hover {
   background: #1d4ed8;
 }
 
+/* =========================
+   반응형 (모바일)
+========================= */
+@media (max-width: 600px) {
+
+  .content {
+    margin: 40px 12px;
+  }
+
+  .line {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .speaker {
+    font-size: 14px;
+  }
+
+  .script-card {
+    padding: 4px;
+  }
+}
