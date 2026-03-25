@@ -25,7 +25,7 @@ body {
 }
 
 .container {
-  display: flex;
+  display: block !important;
   flex-direction: column; /* 🔥 세로 정렬 핵심 */
   align-items: center;    /* 가운데 정렬 유지 */
 }
@@ -107,7 +107,7 @@ body {
 /* =========================
    🎭 나레이션
 ========================= */
-.script-card .speaker.narration {
+div.script-card div.speaker.narration {
   background: #ffffff !important;
   color: #aaaaaa !important;
 }
