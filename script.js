@@ -17,8 +17,13 @@ async function loadScript() {
 
   data.slice(0, 300).forEach(line => { // ⭐ 렉 방지 (300 정도 추천)
 
-    let name = nameMap[line.nameId] || "나레이션";
-    let text = line.text || "";
+    let name = "나레이션";
+
+if (line.nameId && nameMap[line.nameId]) {
+  name = nameMap[line.nameId];
+} else if (line.nameId) {
+  name = "???"; // 또는 ID 표시도 가능
+}
 
     // 태그 변환
     text = text
