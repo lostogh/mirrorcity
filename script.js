@@ -67,14 +67,15 @@ data.forEach(line => {
   card.className = "script-card";
 
   // ✅ speaker 생성 (여기가 핵심)
-  const speaker = document.createElement("div");
-  speaker.className = "speaker"; // 🔥 초기화
+    const speaker = document.createElement("div");
 
-  if (name === "나레이션") {
-    speaker.classList.add("narration");
-  } else {
-    speaker.classList.add("character");
-  }
+    // 🔥 무조건 초기화
+    speaker.className = "speaker";
+
+    // 🔥 여기서 하나만 선택
+    if (name === "나레이션") {
+      speaker.classList.add("narration");
+    }
 
   speaker.innerText = name;
 
