@@ -107,7 +107,7 @@ body {
 .script-card .speaker.narration {
   background: #ffffff !important;
   color: #aaaaaa !important;
-  font-style: italic
+  font-style: italic !important;
 }
 
 /* =========================

@@ -70,11 +70,11 @@ data.forEach(line => {
   const speaker = document.createElement("div");
   speaker.classList.add("speaker");
 
-  if (name === "나레이션") {
-    speaker.classList.add("narration");
-  } else {
-    speaker.classList.add("character");
-  }
+    if (name === "나레이션") {
+      speaker.classList.add("speaker", "narration");
+    } else {
+      speaker.classList.add("speaker", "character");
+    }
 
   speaker.innerText = name;
 
