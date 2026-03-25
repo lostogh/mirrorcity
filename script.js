@@ -14,9 +14,9 @@ async function loadScript() {
   const data = await res.json();
 
   const container = document.getElementById("content");
-  container.innerHTML = ""; // 초기화
+  container.innerHTML = "";
 
-  data.slice(0, 1000).forEach(line => { // ⭐ 처음엔 1000 정도 추천
+  data.forEach(line => {  // ⭐ 제한 없음 (전체 출력)
 
     if (!line) return;
 
