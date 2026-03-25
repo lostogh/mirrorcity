@@ -42,11 +42,15 @@ async function loadScript() {
 
   let name = "나레이션";
 
-  if (line.code && codeMap[line.code]) {
-    name = codeMap[line.code];
-  } else if (line.nameId !== undefined && nameMap[line.nameId]) {
-    name = nameMap[line.nameId];
+if (line.code && codeMap[line.code]) {
+  name = codeMap[line.code];
+} 
+else if (line.nameId !== undefined && nameMap[line.nameId]) {
+  const mapped = nameMap[line.nameId];
+  if (mapped && mapped.trim() !== "") {
+    name = mapped;
   }
+}
 
   const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
 
@@ -113,7 +117,7 @@ async function loadScript() {
     const speaker = document.createElement("div");
     speaker.className = "speaker";
 
-    if (name === "나레이션") {
+    if (name.includes("나레이션")) {
       speaker.classList.add("narration");
     } else {
       speaker.classList.add("character");
