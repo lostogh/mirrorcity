@@ -20,7 +20,7 @@ let codeMap = {
 };
 
 async function loadNames() {
-  const res = await fetch("./Names.json");
+  const res = await fetch("./script/Names.json");
   const data = await res.json();
 
   data.m_names.Array.forEach(n => {
@@ -29,7 +29,7 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch("./str.json");
+  const res = await fetch("./script/str.json");
   const data = await res.json();
 
   const container = document.getElementById("content");
