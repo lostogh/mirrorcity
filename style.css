@@ -111,7 +111,6 @@ body {
   padding: 0;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
   border-radius: 16px;
-  border-left: 6px solid #2563eb;
   transition: all 0.2s ease;
 }
 
@@ -132,6 +131,7 @@ body {
 .speaker.narration {
   background: #e5e7eb;
   color: #555;
+  right: 28px;
   font-style: italic;
 }
 
@@ -139,6 +139,7 @@ body {
 .speaker.character {
   background: #5479c9;
   color: white;
+  right: 28px;
   font-weight: 600;
 }
 
