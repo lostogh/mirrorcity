@@ -121,7 +121,7 @@ data.forEach(line => {
     const speaker = document.createElement("div");
     speaker.className = "speaker";
 
-    if (name.includes("≪나레이션≫")) {
+    if (name.includes("나레이션")) {
       speaker.classList.add("narration");
     } else {
       speaker.classList.add("character");
