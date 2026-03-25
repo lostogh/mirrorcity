@@ -54,7 +54,7 @@ data.forEach(line => {
 
   // 👉 텍스트 변환 (여기서 먼저 처리)
   text = text
-    .replace(/<name>/g, "<주인공>")
+    .replace(/<name>/g, `<span class="player-name">주인공</span>`);
     .replace(/<i>/g, "<em>")
     .replace(/<\/i>/g, "</em>")
     .replace(/<color=#(.*?)>(.*?)<\/color>/g,
