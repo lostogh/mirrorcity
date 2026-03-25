@@ -146,11 +146,11 @@ body {
    선택지
 ========================= */
 .choice {
-  background: #cee8f1;
+  background: #d1e2e7;
   color: rgb(13, 24, 90);
 
   padding: 10px;
-  margin: 10px 80px;
+  margin: 20px 80px;
 
   border-radius: 8px;
   cursor: pointer;
