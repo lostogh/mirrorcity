@@ -91,7 +91,7 @@ async function loadScript() {
         btn.innerText = choice;
 
         btn.onclick = () => {
-          alert(choice);
+        console.log("선택:", choice);
         };
 
         choiceBox.appendChild(btn);
