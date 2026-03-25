@@ -90,6 +90,8 @@ body {
 
 /* 검색창 */
 .search-box input {
+  display: flex;
+  justify-content: center;
   width: 320px;
   padding: 10px 14px;
   border: 1px solid #ddd;
