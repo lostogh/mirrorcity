@@ -2,6 +2,10 @@ body {
   background: #f5f6f8;
 }
 
+.content {
+  max-width: 900px;
+}
+
 .search-box {
   margin-bottom: 25px;
 }
