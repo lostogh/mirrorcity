@@ -220,10 +220,10 @@ body {
 
 /* 선택지 */
 .choice {
-  background: #9ae7ff;
+  background: #9eacb1;
   color: rgb(13, 24, 90);
   padding: 10px;
-  margin: 30px 50px;
+  margin: 40px 80px;
   border-radius: 8px;
   cursor: pointer;
 }
