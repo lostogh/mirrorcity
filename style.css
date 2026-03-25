@@ -120,13 +120,14 @@ body {
   box-shadow: none;
 }
 
+/* 이름표 */
 .speaker {
   display: inline-block;
   padding: 6px 20px;
   border-radius: 999px;
   font-size: 12px;
   min-width: 80px; /* 🔥 짧은 이름도 일정 크기 유지 */
-  margin-left: 16px; /* 🔥 왼쪽으로 밀기 */
+  margin-left: 24px; /* 🔥 왼쪽으로 밀기 */
   margin-bottom: 8px;
 }
 
