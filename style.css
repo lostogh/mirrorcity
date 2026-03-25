@@ -153,7 +153,7 @@ body {
 }
 
 /* 🎭 나레이션 */
-.speaker.narration {
+div.speaker.narration {
   background: #ffffff !important;
   color: #aaaaaa !important;
   right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
