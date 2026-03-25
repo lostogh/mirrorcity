@@ -55,6 +55,8 @@ data.forEach(line => {
     }
   }
 
+  console.log(name);
+
   text = text
     .replace(/<name>/g, "[주인공]")
     .replace(/<i>/g, "<em>")
