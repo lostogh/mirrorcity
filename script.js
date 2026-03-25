@@ -104,7 +104,7 @@ else if (line.nameId !== undefined && nameMap[line.nameId]) {
 
     // 텍스트 변환
     text = text
-      .replace(/<name>/g, "[주인공]")
+      .replace(/<name>/g, "<주인공>")
       .replace(/<i>/g, "<em>")
       .replace(/<\/i>/g, "</em>")
       .replace(/<color=#(.*?)>(.*?)<\/color>/g,
