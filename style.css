@@ -59,7 +59,7 @@ body {
   color: #ffffff; /* 🔥 흰 글씨로 변경 (배경 어두움) */
   font-weight: 700;
 
-  background-image: url("img/BG_SystemMrssage_basic.png"); /* 🔥 경로 맞춰야 함 */
+  background-image: url("img/BG_System.png");
   background-size: cover;        /* 꽉 채움 */
   background-position: center;   /* 중앙 정렬 */
 
