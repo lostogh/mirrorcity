@@ -1,12 +1,12 @@
 body {
-  background: #e9edf3;  /* 🔥 기존보다 대비 ↑ */
+  background: #e9edf3;
   font-family: 'Pretendard', sans-serif;
 }
 
 .content {
-  max-width: 700px;     /* 🔥 폭 줄이기 */
-  margin: 40px auto;    /* 🔥 가운데 정렬 */
-  padding: 0 16px;      /* 🔥 좌우 여백 */
+  max-width: 700px;
+  margin: 60px auto;   /* 🔥 위아래 여백 크게 */
+  padding: 0 16px;
 }
 
 .container {
