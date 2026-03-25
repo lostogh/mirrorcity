@@ -64,18 +64,23 @@ async function loadScript() {
       .replace(/<color=#(.*?)>(.*?)<\/color>/g,
         '<span style="color:#$1">$2</span>');
 
-    // 카드 생성
-const speaker = document.createElement("div");
+    // 🔥 카드 생성 
+    const card = document.createElement("div");
+    card.className = "script-card";
 
-speaker.classList.add("speaker");
+    // 🔥 대사
+    const lineDiv = document.createElement("div");
+    lineDiv.className = "line";
+    lineDiv.innerHTML = text;
 
-if (name === "나레이션") {
-  speaker.classList.add("narration");
-} else {
-  speaker.classList.add("character");
-}
+    // 🔥 카드에 추가
+    card.appendChild(speaker);
+    card.appendChild(lineDiv);
 
-speaker.innerText = name;
+    // 🔥 화면에 추가
+    container.appendChild(card);
+
+    speaker.innerText = name;
 
     // 선택지
 if (line.choices && line.choices.length > 0) {
