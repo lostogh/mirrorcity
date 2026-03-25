@@ -6,6 +6,11 @@ body {
   max-width: 900px;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 .search-box {
   margin-bottom: 25px;
 }
