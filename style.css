@@ -121,9 +121,10 @@ body {
 
 .speaker {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 6px 20px;
   border-radius: 999px;
   font-size: 12px;
+  min-width: 80px; /* 🔥 짧은 이름도 일정 크기 유지 */
   margin-bottom: 8px;
 }
 
@@ -131,23 +132,25 @@ body {
 .speaker.narration {
   background: #e5e7eb;
   color: #555;
-  right: 28px;
+  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
   font-style: italic;
+  font-weight: 700;
 }
 
 /* 🧑 캐릭터 */
 .speaker.character {
   background: #5479c9;
   color: white;
-  right: 28px;
-  font-weight: 600;
+  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
+  font-weight: 700;
 }
 
 /* 🔥 새로운 색 (기타 캐릭터) */
 .speaker.other {
   background: #8f74bb;  /* 연보라 */
   color: white;
-  font-weight: 600;
+  right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
+  font-weight: 700;
 }
 
 .line {
