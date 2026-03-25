@@ -176,6 +176,29 @@ body {
   margin: 0 12px; /* 좌우 줄이기 */
 }
 
+/* 추가 대사 토글 작업*/
+
+.extra-script {
+  margin: 40px 0;
+  border-radius: 16px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(6px);
+}
+
+.extra-script summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.extra-script[open] summary {
+  margin-bottom: 10px;
+}
+
+
+/* 아래가 폰 화면 옵션이었던가? */
 
 @media (max-width: 600px) {
 
