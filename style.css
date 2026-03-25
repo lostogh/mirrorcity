@@ -105,9 +105,9 @@ body {
    🎭 나레이션
 ========================= */
 .speaker.narration {
-  background: #ffffff;
-  color: #aaaaaa;
-  font-style: italic;
+  background: #ffffff !important;
+  color: #aaaaaa !important;
+  font-style: italic
 }
 
 /* =========================
