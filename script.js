@@ -71,6 +71,10 @@ async function loadScript() {
     const speaker = document.createElement("div");
     speaker.className = (name === "나레이션") ? "speaker narration" : "speaker character";
     speaker.innerText = name;
+    
+    if (name === "나레이션") {
+    speaker.classList.add("narration");
+    }
 
     const lineDiv = document.createElement("div");
     lineDiv.className = "line";
