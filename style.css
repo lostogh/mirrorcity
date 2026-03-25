@@ -29,3 +29,45 @@ body {
   border-color: #666;
   box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
 }
+
+.script-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  border: 1px solid #e5e7eb;
+
+  transition: all 0.2s ease;
+}
+
+.script-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.speaker {
+  font-size: 13px;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* 🎭 나레이션 */
+.speaker.narration {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* 🧑 캐릭터 */
+.speaker.character {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* 💬 대사 */
+.line {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #111827;
+}
+
+
