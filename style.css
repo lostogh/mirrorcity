@@ -115,11 +115,6 @@ body {
   transition: all 0.2s ease;
 }
 
-.script-card:hover {
-  transform: translateY(-6px);
-  box-shadow: none;
-}
-
 /* 이름표 */
 .speaker {
   display: inline-block;
