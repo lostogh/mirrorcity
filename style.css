@@ -104,7 +104,7 @@ body {
 /* =========================
    🎭 나레이션
 ========================= */
-.speaker.narration {
+.script-card .speaker.narration {
   background: #ffffff !important;
   color: #aaaaaa !important;
   font-style: italic
