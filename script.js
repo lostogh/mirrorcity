@@ -35,99 +35,86 @@ async function loadScript() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  data.forEach(line => {
+data.forEach(line => {
 
-    if (!line) return;
+  if (!line) return;
 
-    let text = line.text || "";
-    if (!text) return;
+  let text = line.text || "";
+  if (!text) return;
 
-    let name = "나레이션";
+  let name = "나레이션";
 
-    // 이름 처리
-    if (line.code && codeMap[line.code]) {
-      name = codeMap[line.code];
-    } else if (line.nameId !== undefined && nameMap[line.nameId]) {
-      name = nameMap[line.nameId];
-    } else {
-      const match = text.match(/<i>(.*?)<\/i>/);
-      if (match) {
-        name = match[1];
-      }
+  if (line.code && codeMap[line.code]) {
+    name = codeMap[line.code];
+  } else if (line.nameId !== undefined && nameMap[line.nameId]) {
+    name = nameMap[line.nameId];
+  } else {
+    const match = text.match(/<i>(.*?)<\/i>/);
+    if (match) {
+      name = match[1];
     }
+  }
 
-    // 태그 처리
-    text = text
-      .replace(/<name>/g, "[주인공]")
-      .replace(/<i>/g, "<em>")
-      .replace(/<\/i>/g, "</em>")
-      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-        '<span style="color:#$1">$2</span>');
+  text = text
+    .replace(/<name>/g, "[주인공]")
+    .replace(/<i>/g, "<em>")
+    .replace(/<\/i>/g, "</em>")
+    .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+      '<span style="color:#$1">$2</span>');
 
-    // 🔥 카드 생성 
-    const card = document.createElement("div");
-    card.className = "script-card";
+  // ✅ 카드 생성
+  const card = document.createElement("div");
+  card.className = "script-card";
 
-    // 🔥 대사
-    const lineDiv = document.createElement("div");
-    lineDiv.className = "line";
-    lineDiv.innerHTML = text;
+  // ✅ speaker 생성 (여기가 핵심)
+  const speaker = document.createElement("div");
+  speaker.classList.add("speaker");
 
-    // 🔥 카드에 추가
-    card.appendChild(speaker);
-    card.appendChild(lineDiv);
+  if (name === "나레이션") {
+    speaker.classList.add("narration");
+  } else {
+    speaker.classList.add("character");
+  }
 
-    // 🔥 화면에 추가
-    container.appendChild(card);
+  speaker.innerText = name;
 
-    speaker.innerText = name;
+  // ✅ 대사 생성
+  const lineDiv = document.createElement("div");
+  lineDiv.className = "line";
+  lineDiv.innerHTML = text;
 
-    // 선택지
-if (line.choices && line.choices.length > 0) {
-  const choiceBox = document.createElement("div");
+  // ✅ 카드에 추가
+  card.appendChild(speaker);
+  card.appendChild(lineDiv);
 
-  line.choices.forEach(choice => {
+  // ✅ 화면에 추가
+  container.appendChild(card);
 
-    // 🔥 여기서 반드시 변환
-    let choiceText = choice
-      .replace(/<name>/g, "[주인공]")
-      .replace(/<i>/g, "<em>")
-      .replace(/<\/i>/g, "</em>")
-      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-        '<span style="color:#$1">$2</span>');
+  // ✅ 선택지
+  if (line.choices && line.choices.length > 0) {
+    const choiceBox = document.createElement("div");
 
-    const btn = document.createElement("div");
-    btn.className = "choice";
+    line.choices.forEach(choice => {
 
-    // 🔥 innerHTML 사용
-    btn.innerHTML = choiceText;
+      let choiceText = choice
+        .replace(/<name>/g, "[주인공]")
+        .replace(/<i>/g, "<em>")
+        .replace(/<\/i>/g, "</em>")
+        .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+          '<span style="color:#$1">$2</span>');
 
-    btn.onclick = () => {
-      console.log(choice);
-    };
+      const btn = document.createElement("div");
+      btn.className = "choice";
+      btn.innerHTML = choiceText;
 
-    choiceBox.appendChild(btn);
-  });
+      btn.onclick = () => {
+        console.log(choice);
+      };
 
-  container.appendChild(choiceBox);
-}
+      choiceBox.appendChild(btn);
+    });
 
-  });
-}
+    container.appendChild(choiceBox);
+  }
 
-async function init() {
-  await loadNames();
-  await loadScript();
-}
-
-init();
-
-function filterText() {
-  let input = document.getElementById("search").value.toLowerCase();
-  let lines = document.querySelectorAll(".line");
-
-  lines.forEach(line => {
-    let text = line.innerText.toLowerCase();
-    line.style.display = text.includes(input) ? "" : "none";
-  });
-}
+});
