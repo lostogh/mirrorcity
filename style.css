@@ -107,7 +107,7 @@ body {
 .script-card {
   position: relative;
   margin-bottom: 10px;
-  background: transparent; /* OK */
+  background: rgba(255, 255, 255, 0.3);
   padding: 8px 0;
   box-shadow: none;
   border-radius: 16px;
