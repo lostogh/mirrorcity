@@ -35,29 +35,37 @@ async function loadScript() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  data.forEach(line => {
+data.forEach(line => {
 
   let text = line.text || "";
   if (!text) return;
 
   let name = "나레이션";
 
-if (line.code && codeMap[line.code]) {
-  name = codeMap[line.code];
-} 
-else if (line.nameId !== undefined && nameMap[line.nameId]) {
-  const mapped = nameMap[line.nameId];
-  if (mapped && mapped.trim() !== "") {
-    name = mapped;
+  if (line.code && codeMap[line.code]) {
+    name = codeMap[line.code];
+  } 
+  else if (line.nameId !== undefined && nameMap[line.nameId]) {
+    const mapped = nameMap[line.nameId];
+    if (mapped && mapped.trim() !== "") {
+      name = mapped;
+    }
   }
-}
+
+  // 👉 텍스트 변환 (여기서 먼저 처리)
+  text = text
+    .replace(/<name>/g, "<주인공>")
+    .replace(/<i>/g, "<em>")
+    .replace(/<\/i>/g, "</em>")
+    .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+      '<span style="color:#$1">$2</span>');
 
   const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
 
   const isClear = cleanText.includes("EPISODE CLEAR");
   const isGameOver = cleanText.includes("GAME OVER");
 
-  // ✅ 카드 1번만 생성
+  // ✅ 카드 생성 (딱 한 번만)
   const card = document.createElement("div");
   card.className = "script-card";
 
@@ -80,26 +88,22 @@ else if (line.nameId !== undefined && nameMap[line.nameId]) {
   card.appendChild(lineDiv);
   container.appendChild(card);
 
-  // ✅ CLEAR
+  // CLEAR / GAME OVER
   if (isClear) {
     const clearBox = document.createElement("div");
     clearBox.style.textAlign = "center";
     clearBox.style.margin = "120px 0";
-
     clearBox.innerHTML = `<img src="img/Img_EpisodeClearText.png" class="responsive-img">`;
     container.appendChild(clearBox);
   }
 
-  // ✅ GAME OVER
   if (isGameOver) {
     const overBox = document.createElement("div");
     overBox.style.textAlign = "center";
     overBox.style.margin = "120px 0";
-
     overBox.innerHTML = `<img src="img/GameOver.png" class="responsive-img">`;
     container.appendChild(overBox);
   }
-
 });
 
     // 텍스트 변환
