@@ -85,11 +85,6 @@ async function loadScript() {
 if (line.choices && line.choices.length > 0) {
   const choiceBox = document.createElement("div");
 
-  const title = document.createElement("div");
-  title.className = "choice-title";
-  title.innerText = "선택지";
-  choiceBox.appendChild(title);
-
   line.choices.forEach(choice => {
 
     // 🔥 여기서 반드시 변환
