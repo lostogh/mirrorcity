@@ -82,31 +82,39 @@ async function loadScript() {
     container.appendChild(card);
 
     // 선택지
-    if (line.choices && line.choices.length > 0) {
-      const choiceBox = document.createElement("div");
+if (line.choices && line.choices.length > 0) {
+  const choiceBox = document.createElement("div");
 
-      line.choices.forEach(choice => {
+  const title = document.createElement("div");
+  title.className = "choice-title";
+  title.innerText = "선택지";
+  choiceBox.appendChild(title);
 
-        let choiceText = choice
-          .replace(/<name>/g, "[주인공]")
-          .replace(/<i>/g, "<em>")
-          .replace(/<\/i>/g, "</em>")
-          .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-            '<span style="color:#$1">$2</span>');
+  line.choices.forEach(choice => {
 
-        const btn = document.createElement("div");
-        btn.className = "choice";
-        btn.innerHTML = choiceText;
+    // 🔥 여기서 반드시 변환
+    let choiceText = choice
+      .replace(/<name>/g, "[주인공]")
+      .replace(/<i>/g, "<em>")
+      .replace(/<\/i>/g, "</em>")
+      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+        '<span style="color:#$1">$2</span>');
 
-        btn.onclick = () => {
-          console.log(choice);
-        };
+    const btn = document.createElement("div");
+    btn.className = "choice";
 
-        choiceBox.appendChild(btn);
-      });
+    // 🔥 innerHTML 사용
+    btn.innerHTML = choiceText;
 
-      container.appendChild(choiceBox);
-    }
+    btn.onclick = () => {
+      console.log(choice);
+    };
+
+    choiceBox.appendChild(btn);
+  });
+
+  container.appendChild(choiceBox);
+}
 
   });
 }
