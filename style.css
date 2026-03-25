@@ -26,8 +26,6 @@ body {
 
 .container {
   display: block !important;
-  flex-direction: column; /* 🔥 세로 정렬 핵심 */
-  align-items: center;    /* 가운데 정렬 유지 */
 }
 
 /* =========================
@@ -107,10 +105,10 @@ body {
 /* =========================
    🎭 나레이션
 ========================= */
-div.script-card div.speaker.narration {
+.script-card .speaker.narration {
   background: #ffffff !important;
   color: #aaaaaa !important;
-}
+  background-color: #ffffff !important;
 
 /* =========================
    🧑 캐릭터
