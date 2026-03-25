@@ -84,4 +84,27 @@ body {
   color: #111827;
 }
 
+@media (max-width: 600px) {
 
+  .content {
+    margin: 40px 12px;
+  }
+
+  .script-card {
+    padding: 14px 14px;
+  }
+
+  .speaker {
+    font-size: 14px;
+  }
+
+  .line {
+    font-size: 16px;   /* 🔥 중요 (글씨 키움) */
+    line-height: 1.8;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+}
