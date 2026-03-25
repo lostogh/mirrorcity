@@ -72,7 +72,7 @@ data.forEach(line => {
   const speaker = document.createElement("div");
   speaker.className = "speaker"; // 🔥 초기화
 
-  if (name === "나레이션") {
+  if (name.replace(/[≪≫\s]/g, "").includes("나레이션")) {
     speaker.classList.add("narration");
   } else {
     speaker.classList.add("character");
