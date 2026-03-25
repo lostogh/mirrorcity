@@ -4,7 +4,9 @@ body {
 }
 
 .content {
-  max-width: 850px;
+  max-width: 700px;     /* 🔥 폭 줄이기 */
+  margin: 40px auto;    /* 🔥 가운데 정렬 */
+  padding: 0 16px;      /* 🔥 좌우 여백 */
 }
 
 .container {
