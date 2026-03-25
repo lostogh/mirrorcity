@@ -104,13 +104,13 @@ body {
   box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
 }
 
-/* 에피소드 제목 */
+/* 에피소드 타이틀 제목 */
 .episode-header {
   max-width: 650px;
   margin: 40px auto;
   padding: 30px 20px;
 
-  background-image: url("img/Bg_Mail.png"); /* 🔥 이미지 경로 */
+  background-image: url("img/Bg_BtnPresent.png"); /* 🔥 이미지 경로 */
   background-size: cover;
   background-position: center;
 
