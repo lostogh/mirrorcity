@@ -149,23 +149,25 @@ body {
   font-weight: 600;
 }
 
-/* 💬 대사 */
 .line {
   font-size: 15px;
-  line-height: 1.6; /* 🔥 줄간격 살짝 줄임 */
+  line-height: 1.6;
   color: #111827;
 
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
-  padding: 14px 16px; /* 🔥 여백 줄임 */
+  padding: 14px 16px;
   border-radius: 14px;
 
   border: 1px solid rgba(255,255,255,0.5);
 
   box-shadow: none;
+
+  margin: 0 12px; /* 좌우 줄이기 */
 }
+
 
 @media (max-width: 600px) {
 
