@@ -84,7 +84,7 @@ async function loadScript() {
 
           container.appendChild(clearBox);
 
-          if (text.includes("GAME OVER")) {
+          if (text.replace(/<[^>]*>/g, "").toUpperCase().includes("GAME OVER")) {
           const overBox = document.createElement("div");
           overBox.style.textAlign = "center";
           overBox.style.margin = "120px 0"; // 상하 여백
