@@ -29,7 +29,7 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch("./script/str.json");
+  const res = await fetch("./script/ep00.json");
   const data = await res.json();
 
   const container = document.getElementById("content");
