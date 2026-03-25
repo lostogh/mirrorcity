@@ -1,4 +1,5 @@
 let nameMap = {};
+let currentEpisode = "EP00"; // 🔥 여기만 바꾸면 기본 에피소드 변경됨
 
 let codeMap = {
   npc01: "나도환",
@@ -29,99 +30,91 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch("https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/EP00.json");
+  const res = await fetch(`https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/${currentEpisode}.json`);
   const data = await res.json();
 
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-data.forEach(line => {
+  data.forEach(line => {
 
-  if (!line) return;
+    if (!line) return;
 
-  let text = line.text || "";
-  if (!text) return;
+    let text = line.text || "";
+    if (!text) return;
 
-  let name = "나레이션";
+    let name = "나레이션";
 
-  if (line.code && codeMap[line.code]) {
-    name = codeMap[line.code];
-  } else if (line.nameId !== undefined && nameMap[line.nameId]) {
-    name = nameMap[line.nameId];
-  } else {
-    const match = text.match(/<i>(.*?)<\/i>/);
-    if (match) {
-      name = match[1];
+    // 이름 처리
+    if (line.code && codeMap[line.code]) {
+      name = codeMap[line.code];
+    } else if (line.nameId !== undefined && nameMap[line.nameId]) {
+      name = nameMap[line.nameId];
+    } else {
+      const match = text.match(/<i>(.*?)<\/i>/);
+      if (match) name = match[1];
     }
-  }
 
-  console.log(name);
+    // 텍스트 변환
+    text = text
+      .replace(/<name>/g, "[주인공]")
+      .replace(/<i>/g, "<em>")
+      .replace(/<\/i>/g, "</em>")
+      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+        '<span style="color:#$1">$2</span>');
 
-  text = text
-    .replace(/<name>/g, "[주인공]")
-    .replace(/<i>/g, "<em>")
-    .replace(/<\/i>/g, "</em>")
-    .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-      '<span style="color:#$1">$2</span>');
+    // 카드 생성
+    const card = document.createElement("div");
+    card.className = "script-card";
 
-  // ✅ 카드 생성
-  const card = document.createElement("div");
-  card.className = "script-card";
+    const speaker = document.createElement("div");
+    speaker.className = "speaker";
 
-  // ✅ speaker 생성 (여기가 핵심)
-  const speaker = document.createElement("div");
-  speaker.className = "speaker"; // 🔥 초기화
+    if (name === "나레이션") {
+      speaker.classList.add("narration");
+    } else {
+      speaker.classList.add("character");
+    }
 
-  if (name.replace(/[≪≫\s]/g, "").includes("나레이션")) {
-    speaker.classList.add("narration");
-  } else {
-    speaker.classList.add("character");
-  }
+    speaker.innerText = name;
 
-  speaker.innerText = name;
+    const lineDiv = document.createElement("div");
+    lineDiv.className = "line";
+    lineDiv.innerHTML = text;
 
-  // ✅ 대사 생성
-  const lineDiv = document.createElement("div");
-  lineDiv.className = "line";
-  lineDiv.innerHTML = text;
+    card.appendChild(speaker);
+    card.appendChild(lineDiv);
+    container.appendChild(card);
 
-  // ✅ 카드에 추가
-  card.appendChild(speaker);
-  card.appendChild(lineDiv);
+    // 선택지
+    if (line.choices && line.choices.length > 0) {
+      const choiceBox = document.createElement("div");
 
-  // ✅ 화면에 추가
-  container.appendChild(card);
+      line.choices.forEach(choice => {
 
-  // ✅ 선택지
-  if (line.choices && line.choices.length > 0) {
-    const choiceBox = document.createElement("div");
+        let choiceText = choice
+          .replace(/<name>/g, "[주인공]")
+          .replace(/<i>/g, "<em>")
+          .replace(/<\/i>/g, "</em>")
+          .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+            '<span style="color:#$1">$2</span>');
 
-    line.choices.forEach(choice => {
+        const btn = document.createElement("div");
+        btn.className = "choice";
+        btn.innerHTML = choiceText;
 
-      let choiceText = choice
-        .replace(/<name>/g, "[주인공]")
-        .replace(/<i>/g, "<em>")
-        .replace(/<\/i>/g, "</em>")
-        .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-          '<span style="color:#$1">$2</span>');
+        btn.onclick = () => {
+          console.log(choice);
+        };
 
-      const btn = document.createElement("div");
-      btn.className = "choice";
-      btn.innerHTML = choiceText;
+        choiceBox.appendChild(btn);
+      });
 
-      btn.onclick = () => {
-        console.log(choice);
-      };
+      container.appendChild(choiceBox);
+    }
 
-      choiceBox.appendChild(btn);
-    });
-
-    container.appendChild(choiceBox);
-  }
-
-});  // forEach
-
-}     // 🔥 이게 빠져 있음 (loadScript 닫기)
+  });
+}
 
 async function init() {
   await loadNames();
