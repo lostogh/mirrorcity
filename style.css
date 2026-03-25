@@ -105,19 +105,13 @@ body {
 }
 
 .script-card {
-  background: #ffffff;
+  position: relative;
+  margin-bottom: 20px;
+  background: transparent; /* OK */
+  padding: 0;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
   border-radius: 16px;
   border-left: 6px solid #2563eb;
-  padding: 20px 22px;
-  margin-bottom: 12px;
-
-  /* 🔥 핵심: 그림자 강화 */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
-  /* 🔥 테두리 살짝 더 보이게 */
-  border: 1px solid #d1d5db;
-
   transition: all 0.2s ease;
 }
 
@@ -168,7 +162,7 @@ body {
   padding: 14px 16px; /* 🔥 여백 줄임 */
   border-radius: 14px;
 
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.5);
 
   box-shadow: none;
 }
@@ -184,7 +178,7 @@ body {
     margin-bottom: 20px;
 
     background: transparent; /* 🔥 이거 핵심 */
-    padding: 0;              /* 🔥 여백 제거 */
+    padding: 4px;              /* 🔥 여백 제거 */
     border: none;
   }
 
