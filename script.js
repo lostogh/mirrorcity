@@ -74,7 +74,7 @@ async function loadScript() {
         if (isClear) {
           const clearBox = document.createElement("div");
           clearBox.style.textAlign = "center";
-          clearBox.style.margin = "40px 0"; // 여백
+          clearBox.style.margin = "12px 0"; // 여백
 
           clearBox.innerHTML = `
             <img src="img/Img_EpisodeClearText.png" 
