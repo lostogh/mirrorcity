@@ -51,7 +51,7 @@ async function loadScript() {
           name = nameMap[line.nameId];
         }
 
-        // 👉 카드 생성 전에 체크
+        // 카드 생성 전, 에피소드 클리어 키워드 확인
         const isClear = text.includes("EPISODE CLEAR");
 
         // ✅ 카드 생성
@@ -83,6 +83,20 @@ async function loadScript() {
           `;
 
           container.appendChild(clearBox);
+
+          if (text.includes("GAME OVER")) {
+          const overBox = document.createElement("div");
+          overBox.style.textAlign = "center";
+          overBox.style.margin = "120px 0"; // 상하 여백
+
+          overBox.innerHTML = `
+            <img src="img/GameOver.png" 
+                alt="Game Over" 
+                class="responsive-img">
+          `;
+
+          container.appendChild(overBox);
+        }
         }
       });
 
