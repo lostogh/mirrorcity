@@ -177,7 +177,6 @@ body {
   max-width: 500px;
   margin: 30px auto;
   padding: 20px;
-
   background: rgba(255, 255, 255, 0.4);
   border-radius: 16px;
 }
@@ -192,7 +191,7 @@ body {
   padding: 14px 18px;
   border-radius: 10px;
 
-  color: #fff;
+  color: #000000;
   font-weight: 700;
 
   background-image: url("img/BG_System.png");
