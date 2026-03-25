@@ -146,8 +146,7 @@ body {
   padding: 6px 20px;
   border-radius: 999px;
   font-size: 12px;
-  min-width: 120px; /* 최소 가로폭 */
-  margin-left: 24px; /* 🔥 왼쪽으로 밀기 */
+  margin-left: 32px; /* 🔥 왼쪽으로 밀기 */
   margin-bottom: 8px;
 }
 
