@@ -86,12 +86,20 @@ async function loadScript() {
       const choiceBox = document.createElement("div");
 
       line.choices.forEach(choice => {
+
+        let choiceText = choice
+          .replace(/<name>/g, "[주인공]")
+          .replace(/<i>/g, "<em>")
+          .replace(/<\/i>/g, "</em>")
+          .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+            '<span style="color:#$1">$2</span>');
+
         const btn = document.createElement("div");
         btn.className = "choice";
-        btn.innerText = choice;
+        btn.innerHTML = choiceText;
 
         btn.onclick = () => {
-        console.log("선택:", choice);
+          console.log(choice);
         };
 
         choiceBox.appendChild(btn);
