@@ -131,8 +131,8 @@ body {
 
 /* 🎭 나레이션 */
 .speaker.narration {
-  background: #e5e7eb;
-  color: #555;
+  background: #ffffff;
+  color: #aaaaaa;
   right: calc(16px + 12px); /* 기존여백+오른쪽으로밀기 */
   font-style: italic;
   font-weight: 700;
