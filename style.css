@@ -22,7 +22,7 @@ body {
   border-radius: 12px; /* 살짝 둥글게 (선택) */
 }
 
-/* 📦 전체 박스 */
+/* 인덱스 전체 박스 */
 .index-box {
   max-width: 500px;
   margin: 30px auto;
@@ -47,26 +47,28 @@ body {
   margin-bottom: 10px;
 }
 
-/* 🔘 버튼 스타일 */
+/* 인덱스 버튼 스타일 */
 .index-box a {
-  display: block;              /* 🔥 세로 버튼 */
+  display: block;
   text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-radius: 10px;
 
-  background: #9ec8ff;
-  color: #000000;
+  color: #ffffff; /* 🔥 흰 글씨로 변경 (배경 어두움) */
+  font-weight: 700;
 
-  font-weight: 500;
+  background-image: url("img/Bg_SystemMessage_Basic.png"); /* 🔥 경로 맞춰야 함 */
+  background-size: cover;        /* 꽉 채움 */
+  background-position: center;   /* 중앙 정렬 */
 
   transition: 0.2s;
 }
 
-/* hover */
+/* 인덱스 버튼 호버 */
 .index-box a:hover {
-  background: #e0e7ff;
-  color: #2563eb;
+  filter: brightness(1.1); /* 🔥 살짝 밝게 */
 }
 
 /* 클릭 후 보라색 방지 */
