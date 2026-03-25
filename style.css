@@ -1,9 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-image: url("img/Bg_Basic.png");
   background-size: cover;        /* 🔥 화면 꽉 채움 + 비율 유지 */
   background-position: center;   /* 가운데 기준 */
   background-repeat: no-repeat;  /* 반복 제거 */
   background-attachment: fixed;  /* 스크롤해도 고정 (선택) */
+  overflow-x: hidden;
   font-family: 'Pretendard', sans-serif;
 }
 
@@ -60,9 +65,9 @@ body {
 }
 
 .content {
-  max-width: 700px;
-  margin: 60px auto;   /* 🔥 위아래 여백 크게 */
-  padding: 0 16px;
+  max-width: 850px;
+  margin: 40px auto;
+  padding: 0 12px; /* 🔥 margin 대신 padding */
 }
 
 .container {
