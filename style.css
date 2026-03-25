@@ -109,14 +109,14 @@ body {
   margin-bottom: 10px;
   background: transparent; /* OK */
   padding: 8px 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: none;
   border-radius: 16px;
   transition: all 0.2s ease;
 }
 
 .script-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 35px rgba(0,0,0,0.15);
+  box-shadow: none;
 }
 
 .speaker {
