@@ -65,25 +65,17 @@ async function loadScript() {
         '<span style="color:#$1">$2</span>');
 
     // 카드 생성
-    const card = document.createElement("div");
-    card.className = "script-card";
+const speaker = document.createElement("div");
 
-    const speaker = document.createElement("div");
-    speaker.className = (name === "나레이션") ? "speaker narration" : "speaker character";
-    speaker.innerText = name;
-    
-    if (name === "나레이션") {
-    speaker.classList.add("narration");
-    }
+speaker.classList.add("speaker");
 
-    const lineDiv = document.createElement("div");
-    lineDiv.className = "line";
-    lineDiv.innerHTML = text;
+if (name === "나레이션") {
+  speaker.classList.add("narration");
+} else {
+  speaker.classList.add("character");
+}
 
-    card.appendChild(speaker);
-    card.appendChild(lineDiv);
-
-    container.appendChild(card);
+speaker.innerText = name;
 
     // 선택지
 if (line.choices && line.choices.length > 0) {
