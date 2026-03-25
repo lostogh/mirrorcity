@@ -1,6 +1,9 @@
 body {
-  background: #e9edf3;
-  font-family: 'Pretendard', sans-serif;
+  background-image: url("img/Bg_Basic.png");
+  background-size: cover;        /* 🔥 화면 꽉 채움 + 비율 유지 */
+  background-position: center;   /* 가운데 기준 */
+  background-repeat: no-repeat;  /* 반복 제거 */
+  background-attachment: fixed;  /* 스크롤해도 고정 (선택) */
 }
 
 /* 📦 전체 박스 */
