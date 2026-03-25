@@ -54,7 +54,7 @@ data.forEach(line => {
 
   // 👉 텍스트 변환 (여기서 먼저 처리)
   text = text
-    .replace(/<name>/g, `<span class="player-name">주인공</span>`);
+    .replace(/<name>/g, `<span class="player-name">주인공</span>`)
     .replace(/<i>/g, "<em>")
     .replace(/<\/i>/g, "</em>")
     .replace(/<color=#(.*?)>(.*?)<\/color>/g,
@@ -105,37 +105,6 @@ data.forEach(line => {
     container.appendChild(overBox);
   }
 });
-
-    // 텍스트 변환
-    text = text
-      .replace(/<name>/g, "<주인공>")
-      .replace(/<i>/g, "<em>")
-      .replace(/<\/i>/g, "</em>")
-      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-        '<span style="color:#$1">$2</span>');
-
-    // 카드 생성
-    const card = document.createElement("div");
-    card.className = "script-card";
-
-    const speaker = document.createElement("div");
-    speaker.className = "speaker";
-
-    if (name.includes("나레이션")) {
-      speaker.classList.add("narration");
-    } else {
-      speaker.classList.add("character");
-    }
-
-    speaker.innerText = name;
-
-    const lineDiv = document.createElement("div");
-    lineDiv.className = "line";
-    lineDiv.innerHTML = text;
-
-    card.appendChild(speaker);
-    card.appendChild(lineDiv);
-    container.appendChild(card);
 
     // 선택지
     if (line.choices && line.choices.length > 0) {
