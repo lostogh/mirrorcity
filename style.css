@@ -125,6 +125,7 @@ body {
   border-radius: 999px;
   font-size: 12px;
   min-width: 80px; /* 🔥 짧은 이름도 일정 크기 유지 */
+  margin-left: 16px; /* 🔥 왼쪽으로 밀기 */
   margin-bottom: 8px;
 }
 
