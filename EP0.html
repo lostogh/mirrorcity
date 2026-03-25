@@ -961,5 +961,24 @@ function filterText() {
     <div><a href="EP1.html">다음 →</a></div>
 </div>
 
+<script>
+const input = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".script-card");
+
+input.addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+
+    if (text.includes(value)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+});
+</script>
+    
 </body>
 </html>
