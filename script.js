@@ -68,13 +68,13 @@ data.forEach(line => {
 
   // ✅ speaker 생성 (여기가 핵심)
   const speaker = document.createElement("div");
-  speaker.classList.add("speaker");
+  speaker.className = "speaker"; // 🔥 초기화
 
-    if (name === "나레이션") {
-      speaker.classList.add("speaker", "narration");
-    } else {
-      speaker.classList.add("speaker", "character");
-    }
+  if (name === "나레이션") {
+    speaker.classList.add("narration");
+  } else {
+    speaker.classList.add("character");
+  }
 
   speaker.innerText = name;
 
