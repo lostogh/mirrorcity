@@ -35,24 +35,56 @@ async function loadScript() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  data.forEach(line => {
+      data.forEach(line => {
 
-    if (!line) return;
+        if (!line) return;
 
-    let text = line.text || "";
-    if (!text) return;
+        let text = line.text || "";
+        if (!text) return;
 
-    let name = "나레이션";
+        let name = "나레이션";
 
-    // 이름 처리
-    if (line.code && codeMap[line.code]) {
-      name = codeMap[line.code];
-    } else if (line.nameId !== undefined && nameMap[line.nameId]) {
-      name = nameMap[line.nameId];
-    } else {
-      const match = text.match(/<i>(.*?)<\/i>/);
-      if (match) name = match[1];
-    }
+        // 👉 기존 이름 처리 로직 유지
+        if (line.code && codeMap[line.code]) {
+          name = codeMap[line.code];
+        } else if (line.nameId !== undefined && nameMap[line.nameId]) {
+          name = nameMap[line.nameId];
+        }
+
+        // 👉 카드 생성 전에 체크
+        const isClear = text.includes("EPISODE CLEAR");
+
+        // ✅ 카드 생성
+        const card = document.createElement("div");
+        card.className = "script-card";
+
+        const speaker = document.createElement("div");
+        speaker.className = "speaker character";
+        speaker.innerText = name;
+
+        const lineDiv = document.createElement("div");
+        lineDiv.className = "line";
+        lineDiv.innerHTML = text;
+
+        card.appendChild(speaker);
+        card.appendChild(lineDiv);
+        container.appendChild(card);
+
+        // 🔥 여기 중요 (clear 처리)
+        if (isClear) {
+          const clearBox = document.createElement("div");
+          clearBox.style.textAlign = "center";
+          clearBox.style.margin = "40px 0"; // 여백
+
+          clearBox.innerHTML = `
+            <img src="img/Img_EpisodeClearText.png" 
+                alt="에피소드 클리어" 
+                class="responsive-img">
+          `;
+
+          container.appendChild(clearBox);
+        }
+      });
 
     // 텍스트 변환
     text = text
@@ -112,8 +144,7 @@ async function loadScript() {
       container.appendChild(choiceBox);
     }
 
-  });
-}
+  };
 
 async function init() {
   await loadNames();
