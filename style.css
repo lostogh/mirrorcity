@@ -1,3 +1,22 @@
 body {
   background: #f5f6f8;
 }
+
+.search-box {
+  margin-bottom: 25px;
+}
+
+.search-box input {
+  width: 320px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.search-box input:focus {
+  border-color: #666;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
