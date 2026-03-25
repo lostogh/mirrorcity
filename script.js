@@ -117,4 +117,13 @@ data.forEach(line => {
     container.appendChild(choiceBox);
   }
 
-});
+});  // forEach
+
+}     // 🔥 이게 빠져 있음 (loadScript 닫기)
+
+async function init() {
+  await loadNames();
+  await loadScript();
+}
+
+init();
