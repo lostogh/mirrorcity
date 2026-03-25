@@ -50,7 +50,7 @@ async function loadScript() {
     }
 
     // 2순위: nameId
-    else if (line.nameId && nameMap[line.nameId]) {
+    else if (line.nameId !== undefined && nameMap[line.nameId]) {
       name = nameMap[line.nameId];
     }
 
@@ -98,7 +98,7 @@ async function loadScript() {
 
     container.appendChild(card);
   });
-  
+
   if (line.choices && line.choices.length > 0) {
   const choiceBox = document.createElement("div");
 
