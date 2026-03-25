@@ -115,3 +115,35 @@ body {
   }
 
 }
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;  /* 🔥 가운데 정렬 */
+  gap: 12px;                /* 버튼 사이 간격 */
+  margin: 30px 0;
+}
+
+.nav-buttons a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: white;
+
+  transition: 0.2s;
+}
+
+/* 🔥 클릭 후 보라색 방지 */
+.nav-buttons a:visited {
+  color: white;
+}
+
+/* hover */
+.nav-buttons a:hover {
+  background: #1d4ed8;
+}
+
