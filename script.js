@@ -35,70 +35,68 @@ async function loadScript() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-      data.forEach(line => {
+  data.forEach(line => {
 
-        if (!line) return;
+  let text = line.text || "";
+  if (!text) return;
 
-        let text = line.text || "";
-        if (!text) return;
+  let name = "나레이션";
 
-        let name = "나레이션";
+  if (line.code && codeMap[line.code]) {
+    name = codeMap[line.code];
+  } else if (line.nameId !== undefined && nameMap[line.nameId]) {
+    name = nameMap[line.nameId];
+  }
 
-        // 👉 기존 이름 처리 로직 유지
-        if (line.code && codeMap[line.code]) {
-          name = codeMap[line.code];
-        } else if (line.nameId !== undefined && nameMap[line.nameId]) {
-          name = nameMap[line.nameId];
-        }
+  const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
 
-        // 카드 생성 전, 에피소드 클리어 키워드 확인
-        const isClear = text.includes("EPISODE CLEAR");
+  const isClear = cleanText.includes("EPISODE CLEAR");
+  const isGameOver = cleanText.includes("GAME OVER");
 
-        // ✅ 카드 생성
-        const card = document.createElement("div");
-        card.className = "script-card";
+  // ✅ 카드 1번만 생성
+  const card = document.createElement("div");
+  card.className = "script-card";
 
-        const speaker = document.createElement("div");
-        speaker.className = "speaker character";
-        speaker.innerText = name;
+  const speaker = document.createElement("div");
+  speaker.className = "speaker";
 
-        const lineDiv = document.createElement("div");
-        lineDiv.className = "line";
-        lineDiv.innerHTML = text;
+  if (name === "나레이션") {
+    speaker.classList.add("narration");
+  } else {
+    speaker.classList.add("character");
+  }
 
-        card.appendChild(speaker);
-        card.appendChild(lineDiv);
-        container.appendChild(card);
+  speaker.innerText = name;
 
-        // 🔥 여기 중요 (clear 처리)
-        if (isClear) {
-          const clearBox = document.createElement("div");
-          clearBox.style.textAlign = "center";
-          clearBox.style.margin = "120px 0"; // 여백
+  const lineDiv = document.createElement("div");
+  lineDiv.className = "line";
+  lineDiv.innerHTML = text;
 
-          clearBox.innerHTML = `
-            <img src="img/Img_EpisodeClearText.png" 
-                alt="에피소드 클리어" 
-                class="responsive-img">
-          `;
+  card.appendChild(speaker);
+  card.appendChild(lineDiv);
+  container.appendChild(card);
 
-          container.appendChild(clearBox);
+  // ✅ CLEAR
+  if (isClear) {
+    const clearBox = document.createElement("div");
+    clearBox.style.textAlign = "center";
+    clearBox.style.margin = "120px 0";
 
-          if (text.replace(/<[^>]*>/g, "").toUpperCase().includes("GAME OVER")) {
-          const overBox = document.createElement("div");
-          overBox.style.textAlign = "center";
-          overBox.style.margin = "120px 0"; // 상하 여백
+    clearBox.innerHTML = `<img src="img/Img_EpisodeClearText.png" class="responsive-img">`;
+    container.appendChild(clearBox);
+  }
 
-          overBox.innerHTML = `
-            <img src="img/GameOver.png" 
-                alt="Game Over" 
-                class="responsive-img">
-          `;
+  // ✅ GAME OVER
+  if (isGameOver) {
+    const overBox = document.createElement("div");
+    overBox.style.textAlign = "center";
+    overBox.style.margin = "120px 0";
 
-          container.appendChild(overBox);
-        }
-        }
-      });
+    overBox.innerHTML = `<img src="img/GameOver.png" class="responsive-img">`;
+    container.appendChild(overBox);
+  }
+
+});
 
     // 텍스트 변환
     text = text
