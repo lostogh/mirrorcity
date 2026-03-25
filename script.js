@@ -20,7 +20,7 @@ let codeMap = {
 };
 
 async function loadNames() {
-  const res = await fetch("https://raw.githubusercontent.com/lostogh/mirrorcity/refs/heads/main/script/Names.json");
+  const res = await fetch("https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/Names.json");
   const data = await res.json();
 
   data.m_names.Array.forEach(n => {
@@ -29,7 +29,7 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch("https://raw.githubusercontent.com/lostogh/mirrorcity/refs/heads/main/script/EP00.json");
+  const res = await fetch("https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/EP00.json");
   const data = await res.json();
 
   const container = document.getElementById("content");
