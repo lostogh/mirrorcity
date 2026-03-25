@@ -77,6 +77,13 @@ body {
   font-weight: 600;
 }
 
+/* 🔥 새로운 색 (기타 캐릭터) */
+.speaker.other {
+  background: #a78bfa;  /* 연보라 */
+  color: white;
+  font-weight: 600;
+}
+
 /* 💬 대사 */
 .line {
   font-size: 15px;

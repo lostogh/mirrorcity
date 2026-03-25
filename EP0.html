@@ -3743,21 +3743,40 @@ function filterText() {
 <a href="EP1.html">다음 →</a>
 
 <script>
-const input = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".script-card");
+document.addEventListener("DOMContentLoaded", function() {
 
-input.addEventListener("input", function() {
-  const value = this.value.toLowerCase();
+  const mainCharacters = [
+    "나도환","백민우","차주연","안내인","강희수","지시아","지시온",
+    "켄","양첸","김소피아","고수아","하루","이린","남영훈",
+    "김이경","고스트","코치"
+  ];
 
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
+  document.querySelectorAll(".speaker.character").forEach(el => {
+    const name = el.textContent.trim();
 
-    if (text.includes(value)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
+    if (!mainCharacters.includes(name)) {
+      el.classList.remove("character");
+      el.classList.add("other");
     }
   });
+
+  const input = document.getElementById("searchInput");
+  const cards = document.querySelectorAll(".script-card");
+
+  input.addEventListener("input", function() {
+    const value = this.value.toLowerCase();
+
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+
+      if (text.includes(value)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+
 });
 </script>
     
