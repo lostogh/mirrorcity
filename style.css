@@ -102,10 +102,9 @@ body {
 /* =========================
    🎭 나레이션
 ========================= */
-.speaker.narration {
-  background: #ffffff;
+.script-card .speaker.narration {
+  background: #ffffff !important;
   color: #aaaaaa !important;
-  font-style: italic;
 }
 
 /* =========================
