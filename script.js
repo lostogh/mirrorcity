@@ -1,5 +1,4 @@
 let nameMap = {};
-let currentEpisode = "EP00"; // 🔥 여기만 바꾸면 기본 에피소드 변경됨
 
 let codeMap = {
   npc01: "나도환",
