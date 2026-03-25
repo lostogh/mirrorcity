@@ -39,7 +39,7 @@ body {
   border-radius: 16px;
   border-left: 6px solid #2563eb;
   padding: 20px 22px;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
 
   /* 🔥 핵심: 그림자 강화 */
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
