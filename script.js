@@ -1,4 +1,5 @@
 let nameMap = {};
+
 let codeMap = {
   npc01: "나도환",
   npc02: "백민우",
@@ -43,17 +44,17 @@ async function loadScript() {
 
     let name = "나레이션";
 
-    // 🔥 1순위: code
+    // 1순위: code
     if (line.code && codeMap[line.code]) {
       name = codeMap[line.code];
     }
 
-    // 🔹 2순위: nameId
+    // 2순위: nameId
     else if (line.nameId && nameMap[line.nameId]) {
       name = nameMap[line.nameId];
     }
 
-    // 🔹 3순위: 텍스트 <i>이름</i>
+    // 3순위: <i>태그
     else {
       const match = text.match(/<i>(.*?)<\/i>/);
       if (match) {
@@ -61,7 +62,7 @@ async function loadScript() {
       }
     }
 
-    // 🔹 태그 변환
+    // 태그 변환
     text = text
       .replace(/<name>/g, "[주인공]")
       .replace(/<i>/g, "<em>")
@@ -69,15 +70,33 @@ async function loadScript() {
       .replace(/<color=#(.*?)>(.*?)<\/color>/g,
         '<span style="color:#$1">$2</span>');
 
-    const div = document.createElement("div");
-    div.className = "line";
+    // =========================
+    // 🔥 여기부터가 핵심 (CSS 맞춤 구조)
+    // =========================
 
-    div.innerHTML = `
-      <div class="name">${name}</div>
-      <div class="text">${text}</div>
-    `;
+    const card = document.createElement("div");
+    card.className = "script-card";
 
-    container.appendChild(div);
+    const speaker = document.createElement("div");
+
+    // 나레이션 / 캐릭터 구분
+    if (name === "나레이션") {
+      speaker.className = "speaker narration";
+    } else {
+      speaker.className = "speaker character";
+    }
+
+    speaker.innerText = name;
+
+    const lineDiv = document.createElement("div");
+    lineDiv.className = "line";
+
+    lineDiv.innerHTML = text;
+
+    card.appendChild(speaker);
+    card.appendChild(lineDiv);
+
+    container.appendChild(card);
   });
 }
 
