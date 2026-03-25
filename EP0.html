@@ -43,6 +43,11 @@ function filterText() {
   <a href="EP2.html">다음 ▶</a>
 </div>
 
+  <!-- 검색바 -->
+  <div class="search-box">
+    <input type="text" id="search" onkeyup="filterText()" placeholder="검색">
+  </div>
+
   <!-- 에피소드 타이틀 -->
 <div class="episode-header">
   <h1>이방인</h1>
@@ -55,16 +60,9 @@ function filterText() {
 </div>
 <br><br>
 
-<div class="content">
-
-  <!-- 검색바 -->
-  <div class="search-box">
-    <input type="text" id="search" onkeyup="filterText()" placeholder="검색">
-  </div>
-
   <!-- 대사 출력 -->
+<div class="content">
   <div id="content"></div>
-
 </div>
 
 <div class="search-box">
