@@ -106,3 +106,13 @@ async function init() {
 }
 
 init();
+
+function filterText() {
+    let input = document.getElementById("search").value.toLowerCase();
+    let lines = document.querySelectorAll(".line");
+
+    lines.forEach(line => {
+        let text = line.innerText.toLowerCase();
+        line.style.display = text.includes(input) ? "" : "none";
+    });
+}
