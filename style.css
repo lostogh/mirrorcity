@@ -31,8 +31,6 @@ body {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 16px;
   border: 1px solid #e5e7eb;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 /* 리스트 기본 제거 */
@@ -51,7 +49,6 @@ body {
 .index-box a {
   display: block;
   text-decoration: none;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 
   padding: 14px 18px;
   border-radius: 10px;
@@ -91,6 +88,7 @@ body {
   margin-bottom: 25px;
 }
 
+/* 검색창 */
 .search-box input {
   width: 320px;
   padding: 10px 14px;
@@ -104,6 +102,31 @@ body {
 .search-box input:focus {
   border-color: #666;
   box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
+
+/* 에피소드 제목 */
+.episode-header {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 30px 20px;
+
+  background-image: url("img/Bg_Mail.png"); /* 🔥 이미지 경로 */
+  background-size: cover;
+  background-position: center;
+
+  border-radius: 12px;
+}
+
+/* 제목 */
+.episode-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+}
+
+/* 설명 */
+.episode-header .desc {
+  font-size: 14px;
+  color: #374151;
 }
 
 /* 스크립트 카드 전체 박스*/
