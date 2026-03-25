@@ -4,6 +4,7 @@ body {
   background-position: center;   /* 가운데 기준 */
   background-repeat: no-repeat;  /* 반복 제거 */
   background-attachment: fixed;  /* 스크롤해도 고정 (선택) */
+  font-family: 'Pretendard', sans-serif;
 }
 
 /* 📦 전체 박스 */
@@ -142,19 +143,19 @@ body {
 /* 💬 대사 */
 .line {
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.6; /* 🔥 줄간격 살짝 줄임 */
   color: #111827;
 
-  background: rgba(255, 255, 255, 0.6);  /* 🔥 반투명 */
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
-  padding: 18px 20px;
+  padding: 14px 16px; /* 🔥 여백 줄임 */
   border-radius: 14px;
 
   border: 1px solid rgba(255,255,255,0.4);
 
-  box-shadow: none; /* 🔥 그림자 제거 */
+  box-shadow: none;
 }
 
 @media (max-width: 600px) {
@@ -164,7 +165,12 @@ body {
   }
 
   .script-card {
-    padding: 14px 14px;
+    position: relative;
+    margin-bottom: 20px;
+
+    background: transparent; /* 🔥 이거 핵심 */
+    padding: 0;              /* 🔥 여백 제거 */
+    border: none;
   }
 
   .speaker {
