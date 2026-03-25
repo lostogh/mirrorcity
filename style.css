@@ -72,14 +72,14 @@ body {
 
 /* 🧑 캐릭터 */
 .speaker.character {
-  background: #2563eb;
+  background: #5479c9;
   color: white;
   font-weight: 600;
 }
 
 /* 🔥 새로운 색 (기타 캐릭터) */
 .speaker.other {
-  background: #a78bfa;  /* 연보라 */
+  background: #8e7ea7;  /* 연보라 */
   color: white;
   font-weight: 600;
 }
