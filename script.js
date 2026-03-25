@@ -98,6 +98,23 @@ async function loadScript() {
 
     container.appendChild(card);
   });
+  
+  if (line.choices && line.choices.length > 0) {
+  const choiceBox = document.createElement("div");
+
+  line.choices.forEach(choice => {
+    const btn = document.createElement("div");
+    btn.className = "choice";
+    btn.innerText = choice;
+
+    btn.onclick = () => {
+      alert(choice); // 👉 테스트용
+    };
+
+    choiceBox.appendChild(btn);
+  });
+
+  container.appendChild(choiceBox);
 }
 
 async function init() {
