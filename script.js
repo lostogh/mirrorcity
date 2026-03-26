@@ -3,7 +3,6 @@ if (typeof currentEpisode === "undefined") {
     var currentEpisode = "ETC"; // var 사용하면 재선언 충돌 안 남
 }
 let nameMap = {};
-
 let codeMap = {
   npc01: "나도환",
   npc02: "백민우",
