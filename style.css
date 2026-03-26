@@ -210,18 +210,21 @@ body {
 
 /* 버튼 스타일 조정 */
 .index-box a {
-  display: block;
-  width: 400px;           /* 가로폭 */
-  height: 61px;           /* 세로폭 */
-  line-height: 50px;      /* 글씨 세로 중앙 정렬 */
+  display: flex;                 /* flex 사용 */
+  justify-content: center;       /* 가로 중앙 */
+  align-items: center;           /* 세로 중앙 */
+  
+  width: 400px;                  /* 가로폭 */
+  height: 61px;                  /* 세로폭 */
+  
   border-radius: 10px;
-  color: #ffffff;         /* 글씨 색 */
   font-weight: 700;
+  color: #ffffff;
   text-decoration: none;
   text-align: center;
 
   background-image: url("https://raw.githubusercontent.com/lostogh/mirrorcity/main/img/btn_i.png");
-  background-size: cover;       /* 버튼 크기에 맞게 이미지 확대/축소 */
+  background-size: cover;        /* 버튼 크기에 맞게 이미지 확대/축소 */
   background-position: center;
   background-repeat: no-repeat;
 
@@ -230,7 +233,7 @@ body {
 }
 
 .index-box a:hover {
-  filter: brightness(1.2);      /* 마우스 오버 시 밝게 */
+  filter: brightness(1.2);
 }
 
 /* =========================
