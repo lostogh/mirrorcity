@@ -324,6 +324,7 @@ body {
 ========================= */
 @media (max-width: 600px) {
 
+  /* 기존 코드 유지 */
   .content {
     margin: 40px 12px;
   }
@@ -339,6 +340,39 @@ body {
 
   .script-card {
     padding: 4px;
+    width: 100%;         /* 부모에 맞춤 */
+    max-width: 100%;     /* 넘치지 않게 */
+    box-sizing: border-box;
+  }
+
+  /* 이미지 비율 유지 */
+  .responsive-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* 선택지 박스 */
+  .choice {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 12px 0;
+  }
+
+  /* 네비 버튼 반응형 */
+  .nav-buttons {
+    flex-wrap: wrap;       /* 좁으면 줄 바꿈 */
+    gap: 8px;              /* 모바일 여백 줄임 */
+  }
+
+  .nav-btn {
+    flex: 1 1 auto;        /* 화면 폭에 맞춰 조정 */
+    max-width: 120px;      /* 버튼 최대 크기 */
+    aspect-ratio: 3/1;     /* 이미지 비율 유지 */
+    font-size: 14px;
   }
 }
 
