@@ -180,9 +180,7 @@ body {
 /* =========================
    인덱스 버튼
 ========================= */
-/* =========================
-   인덱스 버튼 배경 이미지
-========================= */
+
 .index-box {
   width: 666px;               /* 원하시는 너비 */
   height: 483px;              /* 원하시는 높이 */
@@ -222,7 +220,7 @@ body {
   text-decoration: none;
   text-align: center;
 
-  background-image: url("https://github.com/lostogh/mirrorcity/blob/main/img/btn_i.png");
+  background-image: url("https://raw.githubusercontent.com/lostogh/mirrorcity/main/img/btn_i.png");
   background-size: cover;       /* 버튼 크기에 맞게 이미지 확대/축소 */
   background-position: center;
   background-repeat: no-repeat;
