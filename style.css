@@ -182,7 +182,7 @@ body {
 ========================= */
 .index-box {
   width: 666px;               /* 원하시는 너비 */
-  height: 483px;              /* 원하시는 높이 */
+  height: auto;              /* 원하시는 높이 */
   max-width: 90%;             /* 화면이 작으면 자동 축소 */
   margin: 30px auto;
   padding: 20px;
@@ -329,28 +329,28 @@ body {
    반응형 (모바일)
 ========================= */
 @media (max-width: 800px) {
-
-  /* 기존 코드 유지 */
   .content {
     margin: 40px 12px;
   }
-
   .line {
     font-size: 16px;
     line-height: 1.8;
   }
-
   .speaker {
     font-size: 14px;
   }
-
   .script-card {
     padding: 4px;
     width: 100%;         /* 부모에 맞춤 */
     max-width: 100%;     /* 넘치지 않게 */
     box-sizing: border-box;
   }
-
+  .index-box {
+    width: 100%;
+    max-width: 95%;
+    height: auto;
+    padding: 16px;
+  }
   .index-box a {
     font-size: 13px;
     padding: 8px 6px;
@@ -360,17 +360,14 @@ body {
     max-width: 100%;
     height: auto;
   }
-
   .choice {
     width: 100%;
     margin: 12px 0;
   }
-
   .nav-buttons {
     flex-wrap: wrap;
     gap: 8px;
   }
-
   .nav-btn {
     flex: 1 1 auto;
     max-width: 70px;
