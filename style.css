@@ -180,35 +180,53 @@ body {
 /* =========================
    인덱스 버튼
 ========================= */
+/* =========================
+   인덱스 버튼 배경 이미지
+========================= */
 .index-box {
-  max-width: 500px;
+  width: 666px;               /* 원하시는 너비 */
+  height: 483px;              /* 원하시는 높이 */
+  max-width: 90%;             /* 화면이 작으면 자동 축소 */
   margin: 30px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.4);
+
+  /* 배경 이미지 적용 */
+  background-image: url("img/Bg_History.png"); /* 원하는 이미지 경로 */
+  background-size: cover;      /* 박스 꽉 채우기 */
+  background-position: center; /* 중앙 기준 */
+  background-repeat: no-repeat;
+
   border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+/* 기존 ul은 중앙 정렬 유지 */
 .index-box ul {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 
+/* 버튼 스타일 조정 */
 .index-box a {
   display: block;
   padding: 14px 18px;
   border-radius: 10px;
-
-  color: #000000;
+  color: #ffffff;             /* 배경이 어두우면 흰색 글씨 */
   font-weight: 700;
-
-  background-image: url("img/BG_System.png");
-  background-size: cover;
-
   text-decoration: none;
+
+  background: rgba(0,0,0,0.4); /* 버튼 배경 반투명 */
+  margin-bottom: 10px;         /* 버튼 사이 여백 */
+  text-align: center;
+  transition: 0.2s;
 }
 
 .index-box a:hover {
-  filter: brightness(1.1);
+  background: rgba(0,0,0,0.7); /* 호버 시 진하게 */
 }
 
 /* =========================
