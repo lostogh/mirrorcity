@@ -220,14 +220,14 @@ body {
   font-weight: 700;
   text-decoration: none;
 
-  background: rgba(30, 73, 153, 0.8); /* 버튼 배경 반투명 */
+  background: rgba(30, 73, 153, 0.6); /* 버튼 배경 반투명 */
   margin: 8px auto;         /* 버튼 사이 여백 + 중앙 정렬 */
   text-align: center;
   transition: 0.2s;
 }
 
 .index-box a:hover {
-  background: rgba(0,0,0,0.7); /* 호버 시 진하게 */
+  filter: brightness(1.2); /*마우스 오버 시 버튼 밝게*/
 }
 
 /* =========================
