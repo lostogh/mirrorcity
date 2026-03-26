@@ -260,6 +260,8 @@ body {
   font-weight: 700;
   font-size: clamp(10px, 2.2vw, 16px);
   line-height: 1.2;
+  word-break: keep-all;              /* 🔥 한글 단어 단위 유지 */
+  overflow-wrap: break-word;
   text-decoration: none;
   text-align: center;
 
