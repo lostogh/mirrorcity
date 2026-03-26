@@ -1,4 +1,5 @@
 let nameMap = {};
+let currentEpisode = window.currentEpisode || "ETC"; // ETC.json 불러오게 기본값 지정
 
 let codeMap = {
   npc01: "나도환",
