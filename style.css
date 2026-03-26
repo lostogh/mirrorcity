@@ -272,7 +272,7 @@ body {
 }
 
 /* =========================
-   네비 버튼
+   네비 이동 버튼
 ========================= */
 .nav-buttons {
   display: flex;
@@ -281,18 +281,41 @@ body {
   margin: 30px 0;
 }
 
-.nav-buttons a {
-  padding: 8px 14px;
+.nav-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;      /* 필요 시 이미지 크기에 맞게 조정 */
+  height: 50px;
   border-radius: 10px;
 
-  background: #2563eb;
   color: white;
-
+  font-weight: bold;
   text-decoration: none;
+  font-size: 16px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition: filter 0.2s ease;
 }
 
-.nav-buttons a:hover {
-  background: #1d4ed8;
+.nav-btn:hover {
+  filter: brightness(1.2);
+}
+
+/* 버튼별 이미지 */
+.nav-btn.prev {
+  background-image: url("img/Btn_L.png");
+}
+
+.nav-btn.main {
+  background-image: url("img/Btn_Home.png");
+}
+
+.nav-btn.next {
+  background-image: url("img/Btn_R.png");
 }
 
 /* =========================
