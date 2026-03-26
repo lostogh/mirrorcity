@@ -220,7 +220,7 @@ body {
   font-weight: 700;
   text-decoration: none;
 
-  background: rgba(30, 73, 153, 0.4); /* 버튼 배경 반투명 */
+  background: rgba(30, 73, 153, 0.8); /* 버튼 배경 반투명 */
   margin: 8px auto;         /* 버튼 사이 여백 + 중앙 정렬 */
   text-align: center;
   transition: 0.2s;
