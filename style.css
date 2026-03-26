@@ -249,10 +249,11 @@ body {
   justify-content: center;  /* 세로 중앙 */
   align-items: bottom;      /* 가로 중앙 */
 
-  width: 100%;
-  height: 50px;             /* 필요 시 버튼 높이 조정 */
-  padding: 2px 0;           /* 위아래 여백 */
-  border-radius: 10px;
+  height: auto;          /* 🔥 핵심 */
+  min-height: 50px;      /* 최소 높이만 유지 */
+  padding: 6px 10px;     /* 내부 여백으로 높이 확보 */
+
+  line-height: 1.2;      /* 줄 간격 안정화 */
 
   color: #000000;
   font-weight: 700;
@@ -344,6 +345,12 @@ body {
     max-width: 100%;     /* 넘치지 않게 */
     box-sizing: border-box;
   }
+
+  .index-box a {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+}
 
   /* 이미지 비율 유지 */
   .responsive-img {
