@@ -353,6 +353,8 @@ body {
   .index-box a {
     font-size: 13px;
     padding: 8px 6px;
+      justify-content: center;   /* 세로 중앙 */
+      align-items: center;       /* 가로 중앙 */
   }
     .responsive-img {
     width: 100%;
