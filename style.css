@@ -239,10 +239,10 @@ body {
   display: flex;
   flex-direction: column;   /* 세로 정렬 */
   justify-content: center;  /* 세로 중앙 */
-  align-items: center;      /* 가로 중앙 */
+  align-items: bottom;      /* 가로 중앙 */
 
   width: 100%;
-  height: 20px;             /* 필요 시 버튼 높이 조정 */
+  height: 30px;             /* 필요 시 버튼 높이 조정 */
   padding: 5px 0;           /* 위아래 여백 */
   border-radius: 10px;
 
