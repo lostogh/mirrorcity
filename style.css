@@ -213,14 +213,15 @@ body {
 /* 버튼 스타일 조정 */
 .index-box a {
   display: block;
-  padding: 14px 18px;
+  width: 300px;             /* 버튼 가로폭 지정 */
+  padding: 6px 8px;        /* 세로/좌우 여백 조정 */
   border-radius: 10px;
-  color: #ffffff;             /* 배경이 어두우면 흰색 글씨 */
+  color: #ffffff;           /* 배경이 어두우면 흰색 글씨 */
   font-weight: 700;
   text-decoration: none;
 
-  background: rgba(0,0,0,0.4); /* 버튼 배경 반투명 */
-  margin-bottom: 10px;         /* 버튼 사이 여백 */
+  background: rgba(30, 73, 153, 0.4); /* 버튼 배경 반투명 */
+  margin: 8px auto;         /* 버튼 사이 여백 + 중앙 정렬 */
   text-align: center;
   transition: 0.2s;
 }
