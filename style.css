@@ -214,8 +214,8 @@ body {
   justify-content: center;       /* 가로 중앙 */
   align-items: center;           /* 세로 중앙 */
   
-  width: 400px;                  /* 가로폭 */
-  height: 61px;                  /* 세로폭 */
+  width: 300px;                  /* 가로폭 */
+  height: 46px;                  /* 세로폭 */
   
   border-radius: 10px;
   font-weight: 700;
