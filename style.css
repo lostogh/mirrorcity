@@ -232,7 +232,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;           /* 각 열 버튼 중앙 정렬 */
-  gap: 10px;                     /* 버튼 사이 간격 */
+  gap: 6px;                     /* 버튼 사이 간격 */
   width: 48%;                     /* 좌우 2열 너비 */
 }
 
