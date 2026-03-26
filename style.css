@@ -247,7 +247,9 @@ body {
   display: flex;
   flex-direction: column;   /* 세로 정렬 */
   justify-content: center;  /* 세로 중앙 */
-  align-items: center;      /* 가로 중앙 */
+  align-items: flex-start;      /* 가로 중앙 */
+  text-align: left;
+  padding-left: 12px;
 
   height: auto;          /* 🔥 핵심 */
   width: 100%;
