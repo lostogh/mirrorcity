@@ -213,7 +213,7 @@ body {
 /* 버튼 스타일 조정 */
 .index-box a {
   display: block;
-  width: 300px;             /* 버튼 가로폭 지정 */
+  width: 400px;             /* 버튼 가로폭 지정 */
   padding: 6px 8px;        /* 세로/좌우 여백 조정 */
   border-radius: 10px;
   color: #ffffff;           /* 배경이 어두우면 흰색 글씨 */
