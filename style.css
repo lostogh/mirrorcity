@@ -221,8 +221,9 @@ body {
 .button-grid {
   display: flex;
   justify-content: space-between; /* 좌우 열 최대 간격 */
-  gap: 20px;                      /* 열 사이 여백 */
+  gap: 12px;                      /* 열 사이 여백 */
   width: 100%;
+  margin-top: 14px;  /* 버튼 전체를 제목에 더 가까이 올림 */
 }
 
 .button-grid ul {
