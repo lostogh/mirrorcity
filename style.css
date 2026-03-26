@@ -227,6 +227,15 @@ body {
   margin-top: -7px;  /* 버튼 전체와 제목과의 거리 */
 }
 
+.button-grid a {
+  color: white;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
 .button-grid ul {
   list-style: none;
   padding: 0;
