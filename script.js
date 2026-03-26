@@ -35,9 +35,7 @@ async function loadScript() {
   const data = await res.json();
 
   const container = document.getElementById("content");
-  container.innerHTML = ""; // 반복문 밖으로 이동
-
-  let lastLineWithChoices = null; // 선택지 추적
+  container.innerHTML = ""; // 반복문 밖에서 초기화
 
   data.forEach(line => {
     let text = line.text || "";
@@ -64,7 +62,6 @@ async function loadScript() {
         '<span style="color:#$1">$2</span>');
 
     const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
-
     const isClear = cleanText.includes("EPISODE CLEAR");
     const isGameOver = cleanText.includes("GAME OVER");
 
@@ -108,38 +105,33 @@ async function loadScript() {
       container.appendChild(overBox);
     }
 
-    // 마지막 선택지가 있는 라인 추적
+    // ✅ 선택지: 카드 바로 아래에 붙이도록 반복문 안에서 처리
     if (line.choices && line.choices.length > 0) {
-      lastLineWithChoices = line;
+      const choiceBox = document.createElement("div");
+      choiceBox.className = "choice-box";
+
+      line.choices.forEach(choice => {
+        let choiceText = choice
+          .replace(/<name>/g, "[주인공]")
+          .replace(/<i>/g, "<em>")
+          .replace(/<\/i>/g, "</em>")
+          .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+            '<span style="color:#$1">$2</span>');
+
+        const btn = document.createElement("div");
+        btn.className = "choice";
+        btn.innerHTML = choiceText;
+
+        btn.onclick = () => {
+          console.log(choice);
+        };
+
+        choiceBox.appendChild(btn);
+      });
+
+      container.appendChild(choiceBox); // 카드 바로 아래에 붙임
     }
   });
-
-  // 선택지 생성 (반복문 밖에서 마지막 선택지만)
-  if (lastLineWithChoices) {
-    const choiceBox = document.createElement("div");
-    choiceBox.className = "choice-box";
-
-    lastLineWithChoices.choices.forEach(choice => {
-      let choiceText = choice
-        .replace(/<name>/g, "[주인공]")
-        .replace(/<i>/g, "<em>")
-        .replace(/<\/i>/g, "</em>")
-        .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-          '<span style="color:#$1">$2</span>');
-
-      const btn = document.createElement("div");
-      btn.className = "choice";
-      btn.innerHTML = choiceText;
-
-      btn.onclick = () => {
-        console.log(choice);
-      };
-
-      choiceBox.appendChild(btn);
-    });
-
-    container.appendChild(choiceBox);
-  }
 }
 
 async function init() {
