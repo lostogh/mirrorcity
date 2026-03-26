@@ -188,7 +188,7 @@ body {
   padding: 20px;
 
   /* 배경 이미지 적용 */
-  background-image: url("img/Bg_History.png"); /* 원하는 이미지 경로 */
+  background-image: url("img/Bg_GO.png"); /* 원하는 이미지 경로 */
   background-size: cover;      /* 박스 꽉 채우기 */
   background-position: center; /* 중앙 기준 */
   background-repeat: no-repeat;
