@@ -89,5 +89,194 @@
     "nameId": 19,
     "code": "",
     "choices": []
+  },
+  {
+    "id": 1696381237,
+    "text": "화남",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381262,
+    "text": "비웃음",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381278,
+    "text": "평범표정",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381297,
+    "text": "눈감은것",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381309,
+    "text": "아!루",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381320,
+    "text": "혼란",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381335,
+    "text": "쿨",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381350,
+    "text": "흥미롭군",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381365,
+    "text": "웃기",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381377,
+    "text": "아팟",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381406,
+    "text": "이건뭐지?",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381424,
+    "text": "슬퍼",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381437,
+    "text": "무쪄어",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381451,
+    "text": "미소",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381467,
+    "text": "놀람",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381536,
+    "text": "눈물",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381553,
+    "text": "생각",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381565,
+    "text": "불편",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696381583,
+    "text": "걱정....",
+    "nameId": 0,
+    "code": "npc03",
+    "choices": []
+  },
+  {
+    "id": 1696403494,
+    "text": "화났으",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1696403510,
+    "text": "그냥표정이어",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1696403523,
+    "text": "웃는 표정이여",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1696403538,
+    "text": "슬퍼잉",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1696403553,
+    "text": "충격그잡채",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1696403585,
+    "text": "웃음",
+    "nameId": 0,
+    "code": "npc13",
+    "choices": []
+  },
+  {
+    "id": 1697591659,
+    "text": "1",
+    "nameId": 0,
+    "code": "",
+    "choices": []
+  },
+  {
+    "id": 1698195937,
+    "text": "음",
+    "nameId": 0,
+    "code": "",
+    "choices": []
   }
 ]
