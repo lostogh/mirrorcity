@@ -1,5 +1,8 @@
+// 기존 currentEpisode가 있으면 그대로 두고, 없으면 ETC로 초기화
+if (typeof currentEpisode === "undefined") {
+    var currentEpisode = "ETC"; // var 사용하면 재선언 충돌 안 남
+}
 let nameMap = {};
-let currentEpisode = window.currentEpisode || "ETC"; // ETC.json 불러오게 기본값 지정
 
 let codeMap = {
   npc01: "나도환",
