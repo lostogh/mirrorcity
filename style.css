@@ -250,6 +250,7 @@ body {
   align-items: bottom;      /* 가로 중앙 */
 
   height: auto;          /* 🔥 핵심 */
+  width: 100%;
   min-height: 50px;      /* 최소 높이만 유지 */
   padding: 6px 10px;     /* 내부 여백으로 높이 확보 */
 
@@ -257,6 +258,8 @@ body {
 
   color: #000000;
   font-weight: 700;
+  font-size: clamp(10px, 2.2vw, 16px);
+  line-height: 1.2;
   text-decoration: none;
   text-align: center;
 
@@ -351,7 +354,6 @@ body {
     padding: 8px 6px;
   }
 }
-
 
   .responsive-img {
     width: 100%;
