@@ -1,7 +1,6 @@
-// 기존 currentEpisode가 있으면 그대로 두고, 없으면 ETC로 초기화
-if (typeof currentEpisode === "undefined") {
-    var currentEpisode = "ETC"; // var 사용하면 재선언 충돌 안 남
-}
+// currentEpisode가 없으면 ETC로 초기화
+var currentEpisode = window.currentEpisode || "ETC";
+
 let nameMap = {};
 let codeMap = {
   npc01: "나도환",
