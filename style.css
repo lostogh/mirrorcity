@@ -277,7 +277,7 @@ body {
 .nav-buttons {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 40px;
   margin: 30px 0;
 }
 
