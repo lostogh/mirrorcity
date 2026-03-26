@@ -247,7 +247,7 @@ body {
   display: flex;
   flex-direction: column;   /* 세로 정렬 */
   justify-content: center;  /* 세로 중앙 */
-  align-items: bottom;      /* 가로 중앙 */
+  align-items: center;      /* 가로 중앙 */
 
   height: auto;          /* 🔥 핵심 */
   width: 100%;
@@ -266,7 +266,7 @@ body {
   text-align: center;
 
   background-image: url("https://github.com/lostogh/mirrorcity/raw/main/img/Btn_Option2.png");
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
 
