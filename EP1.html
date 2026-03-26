@@ -1,92 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EP.01 - 단 하나의 별</title>
 
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
-<script>
-function filterText() {
-    let input = document.getElementById("search").value.toLowerCase();
-    let lines = document.querySelectorAll("p");
-
-    lines.forEach(p => {
-        let text = p.innerText.toLowerCase();
-        p.style.display = text.includes(input) ? "" : "none";
-    });
-}
-</script>
 <style>
+/* 기존 스타일 */
+.line { margin-bottom: 12px; }
+.name { color: #6cf; font-weight: bold; }
+.text { margin-left: 10px; }
 
-.line {
-  margin-bottom: 12px;
-}
+/* 반응형 */
+@media (max-width: 600px) {
+  .content { margin: 20px 10px; }
+  .line { font-size: 16px; line-height: 1.6; }
+  .speaker { font-size: 14px; }
+  .script-card { padding: 4px; }
 
-.name {
-  color: #6cf;
-  font-weight: bold;
-}
-
-.text {
-  margin-left: 10px;
+  img.responsive-img { max-width: 100%; height: auto; }
+  .nav-buttons { flex-wrap: wrap; gap: 6px; }
+  .nav-btn { font-size: 12px; padding: 4px 6px; }
 }
 </style>
 </head>
 <body>
 
-  <!-- 내비 버튼 상단 -->  
-<div class="nav-buttons">
-  <a href="EP0.html" class="nav-btn prev"></a>
-  <a href="index.html" class="nav-btn main"></a>
-  <a href="EP2.html" class="nav-btn next"></a>
-</div>
-<br>
-  <!-- 에피소드 이미지 상단 -->
-<div style="text-align: center;">
+<div class="content">
+
+  <!-- 내비 버튼 상단 -->
+  <div class="nav-buttons">
+    <a href="EP0.html" class="nav-btn prev"></a>
+    <a href="index.html" class="nav-btn main"></a>
+    <a href="EP2.html" class="nav-btn next"></a>
+  </div>
+
+  <!-- 에피소드 이미지 -->
+  <div style="text-align: center;">
     <img src="img/Img_SelectEpisode_1.png" alt="에피소드 1" class="responsive-img">
-</div>
+  </div>
 
   <!-- 에피소드 타이틀 -->
-<div class="episode-header">
-  <h1>단 하나의 별</h1>
-  <div class="desc">
-    이상한 면허 시험에 참여하게 된 나.<br>
-    파트너가 된 나도환과 함께 고군분투하게 되는데….
+  <div class="episode-header">
+    <h1>단 하나의 별</h1>
+    <div class="desc">
+      이상한 면허 시험에 참여하게 된 나.<br>
+      파트너가 된 나도환과 함께 고군분투하게 되는데….
+    </div>
   </div>
-</div>
-<div style="text-align: center;">
-    <img src="img/Img_EpisodeClearFx.png" alt="소개 배경" class="responsive-img">
-</div>
 
   <!-- 대사 출력 -->
-<div class="content">
   <div id="content"></div>
-</div>
 
   <!-- 에피소드 이미지 하단 -->
-<br><br><br><br>
-<div style="text-align: center;">
+  <div style="text-align: center;">
     <img src="img/Img_SelectEpisode_1.png" alt="에피소드 1" class="responsive-img">
-</div>
-<br><br><br><br>
-
-  <!-- 스크립트 본문 -->
-<script>
-  // 해당 페이지 JSON 지정
-  var currentEpisode = "EP01"; // EP0.html이면 EP00.json
-</script>
-<script src="script.js"></script>
-<div id="content"></div>
+  </div>
 
   <!-- 내비 버튼 하단 -->
-<div class="nav-buttons">
-  <a href="EP0.html" class="nav-btn prev"></a>
-  <a href="index.html" class="nav-btn main"></a>
-  <a href="EP2.html" class="nav-btn next"></a>
+  <div class="nav-buttons">
+    <a href="EP0.html" class="nav-btn prev"></a>
+    <a href="index.html" class="nav-btn main"></a>
+    <a href="EP2.html" class="nav-btn next"></a>
+  </div>
+
 </div>
+
+<script>
+  var currentEpisode = "EP01";
+</script>
+<script src="script.js"></script>
 
 </body>
 </html>

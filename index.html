@@ -2,34 +2,52 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>스크립트 목록</title>
 
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
+<style>
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .index-box {
+    margin: 20px 10px;
+  }
+  .button-grid ul {
+    padding: 0;
+  }
+  .button-grid li a {
+    display: block;
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+}
+</style>
 </head>
 <body>
 
-<div class="index-box">
-  <h1>미러시티 백업</h1>
+<div class="content">
+  <div class="index-box">
+    <h1>미러시티 백업</h1>
 
-  <!-- 2열 버튼 그리드 -->
-  <div class="button-grid">
-    <ul class="left-col">
-      <li><a href="EP0.html">EP.00<br>이방인</a></li>
-      <li><a href="EP1.html">EP.01<br>단 하나의 별</a></li>
-      <li><a href="EP2.html">EP.02<br>나를 구하는 너의 목소리</a></li>
-      <li><a href="EP3.html">EP.03<br>내 작은 방 속의 영원</a></li>
-      <li><a href="ETC.html">etc.<br>기타</a></li>
-    </ul>
+    <div class="button-grid">
+      <ul class="left-col">
+        <li><a href="EP0.html">EP.00<br>이방인</a></li>
+        <li><a href="EP1.html">EP.01<br>단 하나의 별</a></li>
+        <li><a href="EP2.html">EP.02<br>나를 구하는 너의 목소리</a></li>
+        <li><a href="EP3.html">EP.03<br>내 작은 방 속의 영원</a></li>
+        <li><a href="ETC.html">etc.<br>기타</a></li>
+      </ul>
 
-    <ul class="right-col">
-      <li><a href="#">추가 예정</a></li>
-      <li><a href="#">추가 예정</a></li>
-      <li><a href="#">추가 예정</a></li>
-      <li><a href="#">추가 예정</a></li>
-      <li><a href="#">추가 예정</a></li>
-    </ul>
+      <ul class="right-col">
+        <li><a href="#">추가 예정</a></li>
+        <li><a href="#">추가 예정</a></li>
+        <li><a href="#">추가 예정</a></li>
+        <li><a href="#">추가 예정</a></li>
+        <li><a href="#">추가 예정</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
