@@ -286,7 +286,7 @@ body {
   justify-content: center;
   align-items: center;
   width: auto;      /* 필요 시 이미지 크기에 맞게 조정 */
-  height: aouto;
+  height: auto;
   border-radius: 10px;
 
   color: white;
