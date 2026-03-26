@@ -223,7 +223,7 @@ body {
   justify-content: space-between; /* 좌우 열 최대 간격 */
   gap: 12px;                      /* 열 사이 여백 */
   width: 100%;
-  margin-top: 20px;  /* 버튼 전체와 제목과의 거리 */
+  margin-top: 4px;  /* 버튼 전체와 제목과의 거리 */
 }
 
 .button-grid ul {
