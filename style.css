@@ -285,8 +285,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;      /* 필요 시 이미지 크기에 맞게 조정 */
-  height: auto;
+
+  padding: 10px 20px;   /* 글씨 여백 조절 */
   border-radius: 10px;
 
   color: white;
@@ -294,7 +294,7 @@ body {
   text-decoration: none;
   font-size: 16px;
 
-  background-size: auto;
+  background-size: auto;       /* 원본 이미지 크기 유지 */
   background-position: center;
   background-repeat: no-repeat;
 
