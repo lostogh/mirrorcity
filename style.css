@@ -203,11 +203,10 @@ body {
 
 /* 인덱스 박스 제목 스타일 */
 .index-box h1 {
-  color: #4787ff;       /* 원하는 글씨 색상 */
+  color: #002f5c;       /* 원하는 글씨 색상 */
   text-align: center;   /* 가운데 정렬 */
-  margin-bottom: 20px;  /* 버튼과의 간격 */
-  font-size: 32px;      /* 필요하면 크기 조정 */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* 글씨에 약간 그림자 효과 */
+  margin-bottom: 60px;  /* 버튼과의 간격 */
+  font-size: 48px;      /* 필요하면 크기 조정 */
 }
 
 /* 기존 ul은 중앙 정렬 유지 */
