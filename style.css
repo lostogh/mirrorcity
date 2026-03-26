@@ -213,21 +213,26 @@ body {
 /* 버튼 스타일 조정 */
 .index-box a {
   display: block;
-  width: 400px;             /* 버튼 가로폭 지정 */
-  padding: 6px 8px;        /* 세로/좌우 여백 조정 */
+  width: 400px;           /* 가로폭 */
+  height: 61px;           /* 세로폭 */
+  line-height: 50px;      /* 글씨 세로 중앙 정렬 */
   border-radius: 10px;
-  color: #ffffff;           /* 배경이 어두우면 흰색 글씨 */
+  color: #ffffff;         /* 글씨 색 */
   font-weight: 700;
   text-decoration: none;
-
-  background: rgba(30, 73, 153, 0.6); /* 버튼 배경 반투명 */
-  margin: 8px auto;         /* 버튼 사이 여백 + 중앙 정렬 */
   text-align: center;
-  transition: 0.2s;
+
+  background-image: url("/img/btn_i.png");
+  background-size: cover;       /* 버튼 크기에 맞게 이미지 확대/축소 */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  margin-bottom: 10px;
+  transition: filter 0.2s ease;
 }
 
 .index-box a:hover {
-  filter: brightness(1.2); /*마우스 오버 시 버튼 밝게*/
+  filter: brightness(1.2);      /* 마우스 오버 시 밝게 */
 }
 
 /* =========================
