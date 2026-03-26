@@ -286,6 +286,7 @@ body {
   justify-content: center;
   align-items: center;
 
+  height: 80px;       /* 버튼 높이를 자유롭게 지정 */
   padding: 10px 20px;   /* 글씨 여백 조절 */
   border-radius: 10px;
 
