@@ -1,5 +1,5 @@
-// currentEpisode가 없으면 ETC로 초기화
-var currentEpisode = window.currentEpisode || "ETC";
+// script.js에서 더 이상 currentEpisode를 정의하지 말 것
+// 대신 window.currentEpisode가 반드시 있어야 한다고 가정
 
 let nameMap = {};
 let codeMap = {
