@@ -187,6 +187,8 @@ body {
   margin: 30px auto;
   padding: 20px;
 
+  color: white;
+
   /* 배경 이미지 적용 */
   background-image: url("img/Bg_GO.png"); /* 원하는 이미지 경로 */
   background-size: cover;      /* 박스 꽉 채우기 */
