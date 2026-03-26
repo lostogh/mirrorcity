@@ -220,7 +220,7 @@ body {
 .button-grid {
   display: flex;
   justify-content: space-between; /* 좌우 열 최대 간격 */
-  gap: 12px;                      /* 열 사이 여백 */
+  gap: 10px;                      /* 열 사이 여백 */
   width: 100%;
   margin-top: 6px;  /* 버튼 전체와 제목과의 거리 */
 }
@@ -232,7 +232,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;           /* 각 열 버튼 중앙 정렬 */
-  gap: 6px;                     /* 버튼 사이 간격 */
+  gap: 3px;                     /* 버튼 사이 간격 */
   width: 48%;                     /* 좌우 2열 너비 */
 }
 
