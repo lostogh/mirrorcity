@@ -222,7 +222,7 @@ body {
   text-decoration: none;
   text-align: center;
 
-  background-image: url("/img/btn_i.png");
+  background-image: url("https://github.com/lostogh/mirrorcity/blob/main/img/btn_i.png");
   background-size: cover;       /* 버튼 크기에 맞게 이미지 확대/축소 */
   background-position: center;
   background-repeat: no-repeat;
