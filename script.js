@@ -35,107 +35,112 @@ async function loadScript() {
   const data = await res.json();
 
   const container = document.getElementById("content");
-  container.innerHTML = "";
+  container.innerHTML = ""; // 반복문 밖으로 이동
 
-data.forEach(line => {
+  let lastLineWithChoices = null; // 선택지 추적
 
-  let text = line.text || "";
-  if (!text) return;
+  data.forEach(line => {
+    let text = line.text || "";
+    if (!text) return;
 
-  let name = "나레이션";
+    let name = "나레이션";
 
-  if (line.code && codeMap[line.code]) {
-    name = codeMap[line.code];
-  } 
-  else if (line.nameId !== undefined && nameMap[line.nameId]) {
-    const mapped = nameMap[line.nameId];
-    if (mapped && mapped.trim() !== "") {
-      name = mapped;
+    if (line.code && codeMap[line.code]) {
+      name = codeMap[line.code];
+    } 
+    else if (line.nameId !== undefined && nameMap[line.nameId]) {
+      const mapped = nameMap[line.nameId];
+      if (mapped && mapped.trim() !== "") {
+        name = mapped;
+      }
     }
-  }
 
-  // 👉 텍스트 변환 (여기서 먼저 처리)
-  text = text
-    .replace(/<name>/g, `<span class="player-name">주인공</span>`)
-    .replace(/<i>/g, "<em>")
-    .replace(/<\/i>/g, "</em>")
-    .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-      '<span style="color:#$1">$2</span>');
+    // 텍스트 변환
+    text = text
+      .replace(/<name>/g, `<span class="player-name">주인공</span>`)
+      .replace(/<i>/g, "<em>")
+      .replace(/<\/i>/g, "</em>")
+      .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+        '<span style="color:#$1">$2</span>');
 
-  const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
+    const cleanText = text.replace(/<[^>]*>/g, "").toUpperCase();
 
-  const isClear = cleanText.includes("EPISODE CLEAR");
-  const isGameOver = cleanText.includes("GAME OVER");
+    const isClear = cleanText.includes("EPISODE CLEAR");
+    const isGameOver = cleanText.includes("GAME OVER");
 
-  // ✅ 카드 생성 (딱 한 번만)
-  const card = document.createElement("div");
-  card.className = "script-card";
+    // 카드 생성
+    const card = document.createElement("div");
+    card.className = "script-card";
 
-  const speaker = document.createElement("div");
-  speaker.className = "speaker";
+    const speaker = document.createElement("div");
+    speaker.className = "speaker";
 
-if (name.includes("나레이션")) {
-  speaker.classList.add("narration");
-} else {
-  speaker.classList.add("character");
-}
+    if (name.includes("나레이션")) {
+      speaker.classList.add("narration");
+    } else {
+      speaker.classList.add("character");
+    }
 
-  speaker.innerText = name;
+    speaker.innerText = name;
 
-  const lineDiv = document.createElement("div");
-  lineDiv.className = "line";
-  lineDiv.innerHTML = text;
+    const lineDiv = document.createElement("div");
+    lineDiv.className = "line";
+    lineDiv.innerHTML = text;
 
-  card.appendChild(speaker);
-  card.appendChild(lineDiv);
-  container.appendChild(card);
+    card.appendChild(speaker);
+    card.appendChild(lineDiv);
+    container.appendChild(card);
 
-  // CLEAR / GAME OVER
-  if (isClear) {
-    const clearBox = document.createElement("div");
-    clearBox.style.textAlign = "center";
-    clearBox.style.margin = "120px 0";
-    clearBox.innerHTML = `<img src="img/Img_EpisodeClearText.png" class="responsive-img">`;
-    container.appendChild(clearBox);
-  }
+    // CLEAR / GAME OVER 이미지
+    if (isClear) {
+      const clearBox = document.createElement("div");
+      clearBox.style.textAlign = "center";
+      clearBox.style.margin = "120px 0";
+      clearBox.innerHTML = `<img src="img/Img_EpisodeClearText.png" class="responsive-img">`;
+      container.appendChild(clearBox);
+    }
 
-  if (isGameOver) {
-    const overBox = document.createElement("div");
-    overBox.style.textAlign = "center";
-    overBox.style.margin = "120px 0";
-    overBox.innerHTML = `<img src="img/GameOver.png" class="responsive-img">`;
-    container.appendChild(overBox);
-  }
-});
+    if (isGameOver) {
+      const overBox = document.createElement("div");
+      overBox.style.textAlign = "center";
+      overBox.style.margin = "120px 0";
+      overBox.innerHTML = `<img src="img/GameOver.png" class="responsive-img">`;
+      container.appendChild(overBox);
+    }
 
-    // 선택지
+    // 마지막 선택지가 있는 라인 추적
     if (line.choices && line.choices.length > 0) {
-      const choiceBox = document.createElement("div");
-
-      line.choices.forEach(choice => {
-
-        let choiceText = choice
-          .replace(/<name>/g, "[주인공]")
-          .replace(/<i>/g, "<em>")
-          .replace(/<\/i>/g, "</em>")
-          .replace(/<color=#(.*?)>(.*?)<\/color>/g,
-            '<span style="color:#$1">$2</span>');
-
-        const btn = document.createElement("div");
-        btn.className = "choice";
-        btn.innerHTML = choiceText;
-
-        btn.onclick = () => {
-          console.log(choice);
-        };
-
-        choiceBox.appendChild(btn);
-      });
-
-      container.appendChild(choiceBox);
+      lastLineWithChoices = line;
     }
+  });
 
-  };
+  // 선택지 생성 (반복문 밖에서 마지막 선택지만)
+  if (lastLineWithChoices) {
+    const choiceBox = document.createElement("div");
+    choiceBox.className = "choice-box";
+
+    lastLineWithChoices.choices.forEach(choice => {
+      let choiceText = choice
+        .replace(/<name>/g, "[주인공]")
+        .replace(/<i>/g, "<em>")
+        .replace(/<\/i>/g, "</em>")
+        .replace(/<color=#(.*?)>(.*?)<\/color>/g,
+          '<span style="color:#$1">$2</span>');
+
+      const btn = document.createElement("div");
+      btn.className = "choice";
+      btn.innerHTML = choiceText;
+
+      btn.onclick = () => {
+        console.log(choice);
+      };
+
+      choiceBox.appendChild(btn);
+    });
+
+    container.appendChild(choiceBox);
+  }
+}
 
 async function init() {
   await loadNames();
