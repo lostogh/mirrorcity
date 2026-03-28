@@ -31,7 +31,17 @@ async function loadNames() {
 }
 
 async function loadScript() {
-  const res = await fetch(`https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/${currentEpisode}.json`);
+    // 현재 HTML 파일 이름 가져오기
+  const path = window.location.pathname;
+  const fileName = path.split("/").pop(); // 예: EP0.html
+
+  // .html 제거 → EP0
+  const baseName = fileName.replace(".html", "");
+
+  // JSON 불러오기
+  const res = await fetch(
+    `https://raw.githubusercontent.com/lostogh/mirrorcity/main/script/${baseName}.json?time=${Date.now()}`
+  );
   const data = await res.json();
 
   const container = document.getElementById("content");
