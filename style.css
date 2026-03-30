@@ -181,7 +181,7 @@ body {
   height: auto;              /* 원하시는 높이 */
   max-width: 90%;             /* 화면이 작으면 자동 축소 */
   margin: 30px auto;
-  padding: 20px;
+  padding: 0px;
 
   color: rgb(1, 0, 59);
 
@@ -204,7 +204,7 @@ body {
   color: #002f5c;       /* 원하는 글씨 색상 */
   text-align: center;   /* 가운데 정렬 */
   margin-bottom: 60px;  /* 버튼과의 간격 */
-  font-size: 40px;      /* 필요하면 크기 조정 */
+  font-size: 0px;      /* 필요하면 크기 조정 */
 }
 
 /* 기존 ul은 중앙 정렬 유지 */
@@ -221,7 +221,7 @@ body {
   justify-content: space-between; /* 좌우 열 최대 간격 */
   gap: 10px;                      /* 열 사이 여백 */
   width: 100%;
-  margin-top: -7px;  /* 버튼 전체와 제목과의 거리 */
+  margin-top: -8px;  /* 버튼 전체와 제목과의 거리 */
 }
 
 .button-grid a {
@@ -261,7 +261,7 @@ body {
 
   height: auto;          /* 🔥 핵심 */
   width: 100%;
-  min-height: 50px;      /* 최소 높이만 유지 */
+  min-height: 40px;      /* 최소 높이만 유지 */
   padding: 6px 10px;     /* 내부 여백으로 높이 확보 */
 
   line-height: 1.2;      /* 줄 간격 안정화 */
