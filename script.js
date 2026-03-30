@@ -80,12 +80,18 @@ async function loadScript() {
     card.className = "script-card";
 
     const speaker = document.createElement("div");
+
     speaker.className = "speaker";
 
     if (name.includes("나레이션")) {
       speaker.classList.add("narration");
     } else {
-      speaker.classList.add("character");
+      const isMainCharacter =
+        line.code && codeMap.hasOwnProperty(line.code);
+
+      speaker.classList.add(
+        isMainCharacter ? "character" : "other"
+      );
     }
 
     speaker.innerText = name;
