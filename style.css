@@ -183,19 +183,20 @@ body {
   margin: 30px auto;
   padding: 20px;
 
-  color: white;
+  color: rgb(1, 0, 59);
 
-  /* 배경 이미지 적용 */
-  background-image: url("img/Bg_GO.png"); /* 원하는 이미지 경로 */
+  /* 배경 이미지 적용
+  background-image: url("https://github.com/lostogh/mirrorcity/blob/main/img/Bg_Remote.png?raw=true"); /* 원하는 이미지 경로 */
   background-size: cover;      /* 박스 꽉 채우기 */
-  background-position: center; /* 중앙 기준 */
-  background-repeat: no-repeat;
+  background-position: center; /* 중앙 기준 */ /*
+  background-repeat: no-repeat; */
 
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 /* 인덱스 박스 제목 스타일 */
