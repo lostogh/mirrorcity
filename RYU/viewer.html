@@ -2,43 +2,75 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scenario Viewer</title>
 
 <style>
 body {
-  background:#111;
-  color:#eee;
-  font-family: sans-serif;
   margin:0;
   display:flex;
+  flex-direction:column;
+  background:#111;
+  color:#eee;
+  font-family:sans-serif;
 }
 
-/* 좌측: 파일 목록 */
+/* 상단 */
+#topbar {
+  display:flex;
+  height:40px;
+  border-bottom:1px solid #333;
+}
+#topbar button {
+  flex:1;
+  background:none;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+
+/* 레이아웃 */
+#container {
+  display:flex;
+  height:calc(100vh - 40px);
+}
+
 #fileList {
   width:220px;
-  background:#111;
   border-right:1px solid #333;
-  height:100vh;
-  overflow-y:auto;
+  overflow:auto;
 }
+#fileList.hidden { display:none; }
 
 .file-item {
   padding:8px;
-  cursor:pointer;
   border-bottom:1px solid #222;
+  cursor:pointer;
 }
-.file-item:hover {
-  background:#333;
+.file-item:hover { background:#333; }
+
+#main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
 }
 
-/* 목차 */
 #toc {
-  width:250px;
+  height:110px;
+  overflow:auto;
+  border-bottom:1px solid #333;
   background:#1a1a1a;
-  padding:10px;
-  border-right:1px solid #333;
-  height:100vh;
-  overflow-y:auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:8px;
+}
+#toc.hidden { display:none; }
+
+#toc div {
+  color:#6cf;
+  cursor:pointer;
+  font-size:13px;
 }
 
 /* 본문 */
@@ -46,235 +78,303 @@ body {
   flex:1;
   padding:20px;
   overflow:auto;
+  line-height:1.6;
 }
 
-.block { margin-bottom:14px; }
-
+/* 대사 */
 .speaker {
   color:#6cf;
   font-weight:bold;
+  margin-top:12px;
 }
 
+.block {
+  margin-bottom:10px;
+}
+
+/* 독백 */
+.monologue {
+  color:#aaa;
+  font-style:italic;
+  margin:6px 0 12px 10px;
+}
+
+/* 선택지 */
 .choice-container {
   display:grid;
-  gap:10px;
+  gap:12px;
   margin:20px 0;
 }
 
 .choice {
   background:#1a1a1a;
+  padding:12px;
   border:1px solid #333;
-  padding:10px;
   border-radius:6px;
+}
+
+/* 연출 */
+.directive {
+  color:#777;
+  font-size:12px;
+  border-left:2px solid #444;
+  padding-left:8px;
+  margin:6px 0;
+}
+
+/* 모바일 */
+@media (max-width:768px){
+  #fileList {
+    position:fixed;
+    left:-100%;
+    top:40px;
+    width:70%;
+    height:100%;
+    background:#111;
+    transition:0.3s;
+  }
+  #fileList.open { left:0; }
+
+  #toc {
+    position:fixed;
+    right:-100%;
+    top:40px;
+    width:70%;
+    height:100%;
+    flex-direction:column;
+    transition:0.3s;
+  }
+  #toc.open { right:0; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="fileList"></div>
-<div id="toc"></div>
-<div id="viewer"></div>
+<div id="topbar">
+  <button onclick="toggleFiles()">📁</button>
+  <button onclick="toggleToc()">📑</button>
+  <button onclick="toggleDirectives()" id="btnDirective">⚙️</button>
+</div>
+
+<div id="container">
+  <div id="fileList"></div>
+
+  <div id="main">
+    <div id="toc"></div>
+    <div id="viewer"></div>
+  </div>
+</div>
 
 <script>
 
-// =======================
-// 파일 목록 로드
-// =======================
-async function loadFileList() {
-  const res = await fetch("./data/index.json");
-  const files = await res.json();
+let showDirectives=false;
 
-  const list = document.getElementById("fileList");
+const params=new URLSearchParams(location.search);
+let currentFile=params.get("file");
+let currentEvent=params.get("event");
 
-  files.forEach(name => {
-    const el = document.createElement("div");
-    el.className = "file-item";
-    el.innerText = name;
+/* ================= 실행 보장 ================= */
+document.addEventListener("DOMContentLoaded", ()=>{
+  loadFileList();
+});
 
-    el.onclick = () => loadScenario(name);
+/* ================= 파일 목록 ================= */
+async function loadFileList(){
+
+  const list=document.getElementById("fileList");
+  if(!list) return;
+
+  list.innerHTML="";
+
+  const res=await fetch("./data/index.json");
+  const files=await res.json();
+
+  files.forEach(name=>{
+    const el=document.createElement("div");
+    el.className="file-item";
+    el.innerText=name;
+
+    el.onclick=()=>{
+      currentFile=name;
+      history.pushState({}, "", "?file="+encodeURIComponent(name));
+      loadScenario(name);
+      document.getElementById("fileList").classList.remove("open");
+    };
 
     list.appendChild(el);
   });
 
-  if (files.length) loadScenario(files[0]);
+  loadScenario(currentFile || files[0]);
 }
 
-// =======================
-// 시나리오 로드
-// =======================
-async function loadScenario(name) {
-  const res = await fetch("./data/" + encodeURI(name));
-  const text = await res.text();
+/* ================= 로드 ================= */
+async function loadScenario(name){
 
-  const raw = removeComments(text);
-  const parsed = parse(raw);
+  const res=await fetch("./data/"+encodeURI(name));
+  const text=await res.text();
+
+  const parsed=parse(text);
   render(parsed);
+
+  if(currentEvent){
+    setTimeout(()=>{
+      document.getElementById(currentEvent)?.scrollIntoView();
+    },100);
+  }
 }
 
-// =======================
-// 텍스트 정리
-// =======================
-function cleanText(line) {
+/* ================= 텍스트 ================= */
+function cleanText(line){
   return line
-    .replace(/<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g, "$1($2)")
-    .replace(/<[^>]*>/g, "")
-    .replace(/[▼■]/g, "")
-    .replace(/^人物・/, "")
-    .replace(/用語・/g, "")
+    .replace(/<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g,"$1($2)")
+    .replace(/<[^>]*>/g,"")
+    .replace(/■/g,"")
+    .replace(/▼/g,"\n")
     .trim();
 }
 
-function removeComments(text) {
-  return text.replace(/<!--[\s\S]*?-->/g, "");
+/* ================= 판별 ================= */
+function isDirective(t){
+
+  // 기본 태그형
+  if(
+    t.startsWith("表情・") ||
+    t.startsWith("効果音") ||
+    t.startsWith("背景") ||
+    t.startsWith("衣装・") ||
+    t.startsWith("時間待ち") ||
+    t.startsWith("カットイン") ||
+    t.startsWith("曲・")
+  ) return true;
+
+  // 🔥 설명문 필터 (긴 문장)
+  if(
+    t.length > 40 &&
+    !t.startsWith("（") &&
+    !t.includes("「") &&
+    !t.includes("」") &&
+    !t.includes("『") &&
+    !t.includes("』")
+  ) return true;
+
+  return false;
 }
 
-// =======================
-function isDirective(line) {
-  return (
-    line.startsWith("効果音") ||
-    line.startsWith("カットイン") ||
-    line.startsWith("時間待ち") ||
-    line.startsWith("曲") ||
-    line.startsWith("背景") ||
-    line.startsWith("ループ効果音") ||
-    line.startsWith("ループエフェクト") ||
-    line.startsWith("背景フィルタ") ||
-    line.startsWith("表情")
-  );
+function isMonologue(t){
+  return t.startsWith("（") && t.endsWith("）");
 }
 
-function shouldHideDirective(text) {
-  return (
-    text.startsWith("時間待ち") ||
-    text.startsWith("効果音") ||
-    text.startsWith("ループ効果音") ||
-    text.startsWith("曲") ||
-    text.startsWith("表情")
-  );
+/* ================= push ================= */
+function pushDialogue(arr,speaker,buffer){
+  if(!buffer.length) return;
+  arr.push({type:"dialogue",speaker,text:buffer.join("\n")});
+  buffer.length=0;
 }
 
-function pushDialogue(arr, speaker, buffer) {
-  if (!buffer.length) return;
+/* ================= 파싱 ================= */
+function parse(text){
 
-  arr.push({
-    type: "dialogue",
-    speaker,
-    text: buffer.join("\n")
-  });
+  const lines=text.split("\n").map(l=>l.trim()).filter(l=>l);
 
-  buffer.length = 0;
-}
+  let result=[],toc=[];
+  let currentSpeaker="",buffer=[];
+  let eventIndex=0;
 
-// =======================
-// 🔥 핵심 파서 (원본 유지)
-// =======================
-function parse(text) {
+  for(let i=0;i<lines.length;i++){
 
-  const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+    let line=lines[i];
+    let txt=cleanText(line);
 
-  let result = [];
-  let toc = [];
-
-  let currentSpeaker = "";
-  let buffer = [];
-  let eventIndex = 0;
-
-  for (let i = 0; i < lines.length; i++) {
-
-    let line = lines[i];
-
-    if (
-      line.includes("<画面揺れ") ||
-      line.includes("<時間待ち>") ||
-      line.includes("<ト書き>") ||
-      line.includes("<単発音再生>") ||
-      line.includes("<立ち絵表示") ||
-      line.includes("<顔表示>")
+    if(
+      txt.startsWith("用語・") ||
+      /^\d+$/.test(txt) ||
+      /^\d+\s*==\s*\d+$/.test(txt) ||
+      txt==="-->" ||
+      txt.startsWith("--")
     ) continue;
 
-    let txt = cleanText(line);
-
-    // 이벤트 시작
-    if (line.includes("<サブイベント")) {
-      pushDialogue(result, currentSpeaker, buffer);
-
-      const match = line.match(/名前="([^"]+)"/);
-      if (match) {
-        const id = "event_" + eventIndex++;
-
-        result.push({ type:"eventTitle", title:match[1], id });
-        toc.push({ title:match[1], id });
-      }
+    /* 이벤트 */
+    const m=line.match(/名前="([^"]+)"/);
+    if(m){
+      pushDialogue(result,currentSpeaker,buffer);
+      const id="event_"+eventIndex++;
+      result.push({type:"eventTitle",title:m[1],id});
+      toc.push({title:m[1],id});
       continue;
     }
 
-    // 이벤트 종료
-    if (line.includes("</サブイベント>")) {
-      pushDialogue(result, currentSpeaker, buffer);
-      result.push({ type:"eventEnd" });
+    if(line.includes("</サブイベント>")){
+      pushDialogue(result,currentSpeaker,buffer);
+      result.push({type:"eventEnd"});
       continue;
     }
 
-    // 화자
-    if (line.startsWith("<話者>")) {
-      pushDialogue(result, currentSpeaker, buffer);
-      currentSpeaker = txt;
+    /* 화자 */
+    if(line.startsWith("<話者>") || txt.startsWith("人物・")){
+      pushDialogue(result,currentSpeaker,buffer);
+      currentSpeaker = txt.replace("人物・","");
       continue;
     }
 
-    // 선택지
-    if (line.startsWith("<選択肢実行>")) {
+    /* 독백 */
+    if(isMonologue(txt)){
+      pushDialogue(result,currentSpeaker,buffer);
+      result.push({type:"monologue",text:txt});
+      continue;
+    }
 
-      pushDialogue(result, currentSpeaker, buffer);
+    /* 연출 */
+    if(isDirective(txt)){
+      pushDialogue(result,currentSpeaker,buffer);
+      result.push({type:"directive",text:txt});
+      continue;
+    }
 
-      let choices = [];
+    /* 선택지 */
+    if(line.startsWith("<選択肢実行>")){
+      pushDialogue(result,currentSpeaker,buffer);
+
+      let choices=[];
       i++;
 
-      while (i < lines.length && !lines[i].includes("</選択肢実行>")) {
+      while(i<lines.length && !lines[i].includes("</選択肢実行>")){
 
-        if (lines[i].includes("<場合>")) {
+        if(lines[i].includes("<場合")){
 
-          let content = [];
-          let subSpeaker = currentSpeaker;
-          let subBuffer = [];
-          let first = true;
+          let content=[];
+          let subSpeaker=currentSpeaker;
+          let subBuffer=[];
+          let first=true;
 
           i++;
 
-          while (i < lines.length && !lines[i].includes("</場合>")) {
+          while(i<lines.length && !lines[i].includes("</場合>")){
 
-            let l = lines[i];
+            let t=cleanText(lines[i]);
+            if(!t){ i++; continue; }
 
-            if (
-              l.includes("<ト書き>") ||
-              l.includes("<単発音再生>") ||
-              l.includes("<立ち絵表示") ||
-              l.includes("<顔表示>")
-            ) { i++; continue; }
-
-            let t = cleanText(l);
-
-            if (l.startsWith("<話者>")) {
-
-              if (subBuffer.length) {
-                content.push({
-                  type:"dialogue",
-                  speaker:subSpeaker,
-                  text:subBuffer.join("\n")
-                });
-                subBuffer = [];
+            if(t.startsWith("人物・")){
+              if(subBuffer.length){
+                content.push({type:"dialogue",speaker:subSpeaker,text:subBuffer.join("\n")});
+                subBuffer=[];
               }
-
-              subSpeaker = cleanText(l);
+              subSpeaker=t.replace("人物・","");
             }
 
-            else if (t) {
+            else if(isMonologue(t)){
+              content.push({type:"monologue",text:t});
+            }
 
-              if (first) {
-                content.push({ type:"choiceMain", text:t });
-                first = false;
-              } else {
+            else if(isDirective(t)){
+              content.push({type:"directive",text:t});
+            }
+
+            else{
+              if(first){
+                content.push({type:"choiceMain",text:t});
+                first=false;
+              }else{
                 subBuffer.push(t);
               }
             }
@@ -282,128 +382,122 @@ function parse(text) {
             i++;
           }
 
-          if (subBuffer.length) {
-            content.push({
-              type:"dialogue",
-              speaker:subSpeaker,
-              text:subBuffer.join("\n")
-            });
+          if(subBuffer.length){
+            content.push({type:"dialogue",speaker:subSpeaker,text:subBuffer.join("\n")});
           }
 
-          choices.push({ content });
+          choices.push({content});
         }
 
         i++;
       }
 
-      result.push({ type:"choice", options:choices });
+      result.push({type:"choice",options:choices});
       continue;
     }
 
-    // 지시문
-    if (isDirective(txt)) {
-      if (shouldHideDirective(txt)) continue;
-
-      pushDialogue(result, currentSpeaker, buffer);
-      result.push({ type:"directive", text:txt });
-      continue;
+    if(txt && currentSpeaker){
+      buffer.push(txt);
     }
-
-    // 일반 대사
-    if (txt && currentSpeaker) buffer.push(txt);
   }
 
-  pushDialogue(result, currentSpeaker, buffer);
-
-  return { data:result, toc };
+  pushDialogue(result,currentSpeaker,buffer);
+  return {data:result,toc};
 }
 
-// =======================
-// 렌더 (원본 유지)
-// =======================
-function render(parsed) {
+/* ================= 렌더 ================= */
+function render(parsed){
 
-  const viewer = document.getElementById("viewer");
-  const tocDiv = document.getElementById("toc");
+  const viewer=document.getElementById("viewer");
+  const tocDiv=document.getElementById("toc");
 
-  viewer.innerHTML = "";
-  tocDiv.innerHTML = "";
+  viewer.innerHTML="";
+  tocDiv.innerHTML="";
 
-  parsed.toc.forEach(item => {
-    const el = document.createElement("div");
-    el.style.cursor = "pointer";
-    el.style.color = "#6cf";
-    el.innerText = item.title;
-
-    el.onclick = () => {
-      document.getElementById(item.id)?.scrollIntoView({behavior:"smooth"});
-    };
-
+  parsed.toc.forEach(item=>{
+    const el=document.createElement("div");
+    el.innerText=item.title;
+    el.onclick=()=>document.getElementById(item.id)?.scrollIntoView({behavior:"smooth"});
     tocDiv.appendChild(el);
   });
 
-  let lastSpeaker = null;
+  let lastSpeaker=null;
 
-  parsed.data.forEach(block => {
+  parsed.data.forEach(block=>{
 
-    if (block.type === "eventTitle") {
-      viewer.innerHTML += `<div id="${block.id}" style="color:#ffd700;margin:20px 0;">📌 ${block.title}</div>`;
+    if(block.type==="eventTitle"){
+      viewer.innerHTML+=`<div id="${block.id}" style="color:#ffd700;">📌 ${block.title}</div>`;
       return;
     }
 
-    if (block.type === "eventEnd") {
-      viewer.innerHTML += `<hr>`;
+    if(block.type==="eventEnd"){
+      viewer.innerHTML+="<hr>";
       return;
     }
 
-    if (block.type === "dialogue") {
+    if(block.type==="directive"){
+      if(!showDirectives) return;
+      viewer.innerHTML+=`<div class="directive">⚙ ${block.text}</div>`;
+      return;
+    }
 
-      let speakerHTML = "";
+    if(block.type==="monologue"){
+      viewer.innerHTML+=`<div class="monologue">${block.text}</div>`;
+      return;
+    }
 
-      if (block.speaker && block.speaker !== lastSpeaker) {
-        speakerHTML = `<div class="speaker">${block.speaker}</div>`;
-        lastSpeaker = block.speaker;
+    if(block.type==="dialogue"){
+      let speakerHTML="";
+      if(block.speaker!==lastSpeaker){
+        speakerHTML=`<div class="speaker">${block.speaker}</div>`;
+        lastSpeaker=block.speaker;
       }
 
-      viewer.innerHTML += `
+      viewer.innerHTML+=`
         <div class="block">
           ${speakerHTML}
           <div>${block.text.replace(/\n/g,"<br>")}</div>
         </div>
       `;
-      return;
     }
 
-    if (block.type === "choice") {
+    if(block.type==="choice"){
 
-      const container = document.createElement("div");
-      container.className = "choice-container";
-      container.style.gridTemplateColumns = `repeat(${block.options.length},1fr)`;
+      const container=document.createElement("div");
+      container.className="choice-container";
 
-      block.options.forEach(opt => {
+      container.style.gridTemplateColumns =
+        `repeat(${Math.max(1,block.options.length)}, minmax(0,1fr))`;
 
-        const c = document.createElement("div");
-        c.className = "choice";
+      block.options.forEach(opt=>{
+        const c=document.createElement("div");
+        c.className="choice";
 
-        let last = "";
-        let html = "";
+        let html="";
+        let last="";
 
-        opt.content.forEach(item => {
+        opt.content.forEach(item=>{
 
-          if (item.type === "choiceMain") {
-            html += `<div style="color:#ffd700;font-weight:bold;">▶ ${item.text}</div>`;
+          if(item.type==="choiceMain"){
+            html+=`<div style="color:#ffd700;font-weight:bold;">▶ ${item.text}</div>`;
           }
 
-          if (item.type === "dialogue") {
+          if(item.type==="monologue"){
+            html+=`<div class="monologue">${item.text}</div>`;
+          }
 
-            let speakerHTML = "";
+          if(item.type==="directive" && showDirectives){
+            html+=`<div class="directive">⚙ ${item.text}</div>`;
+          }
 
-            if (item.speaker && item.speaker !== last) {
-              speakerHTML = `<div class="speaker">${item.speaker}</div>`;
-              last = item.speaker;
+          if(item.type==="dialogue"){
+            let speakerHTML="";
+            if(item.speaker!==last){
+              speakerHTML=`<div class="speaker">${item.speaker}</div>`;
+              last=item.speaker;
             }
 
-            html += `
+            html+=`
               <div>
                 ${speakerHTML}
                 <div>${item.text.replace(/\n/g,"<br>")}</div>
@@ -413,7 +507,7 @@ function render(parsed) {
 
         });
 
-        c.innerHTML = html;
+        c.innerHTML=html;
         container.appendChild(c);
       });
 
@@ -423,9 +517,25 @@ function render(parsed) {
   });
 }
 
-// =======================
-loadFileList();
-// =======================
+/* UI */
+function toggleFiles(){
+  const el=document.getElementById("fileList");
+  if(window.innerWidth<=768) el.classList.toggle("open");
+  else el.classList.toggle("hidden");
+}
+
+function toggleToc(){
+  const el=document.getElementById("toc");
+  if(window.innerWidth<=768) el.classList.toggle("open");
+  else el.classList.toggle("hidden");
+}
+
+function toggleDirectives(){
+  showDirectives=!showDirectives;
+  document.getElementById("btnDirective").style.color =
+    showDirectives ? "#ffd700" : "#fff";
+  loadScenario(currentFile);
+}
 
 </script>
 
