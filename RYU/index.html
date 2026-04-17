@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Scenario Viewer</title>
+
+<style>
+body {
+  background:#111;
+  color:#eee;
+  font-family: sans-serif;
+  margin:0;
+  display:flex;
+}
+
+#toc {
+  width:250px;
+  background:#1a1a1a;
+  padding:10px;
+  border-right:1px solid #333;
+
+  position: sticky;   /* 🔥 추가 */
+  top: 0;             /* 🔥 추가 */
+  height: 100vh;      /* 🔥 추가 */
+  overflow-y: auto;   /* 🔥 수정 */
+}
+
+#viewer {
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
+
+.block {
+  margin-bottom:14px;
+}
+
+.speaker {
+  color:#6cf;
+  font-weight:bold;
+  margin-bottom:2px;
+}
+
+.choice-container {
+  display:grid;
+  gap:10px;
+  margin:20px 0;
+}
+
+.choice {
+  background:#1a1a1a;
+  border:1px solid #333;
+  padding:10px;
+  border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="toc"></div>
+<div id="viewer"></div>
+
+<input type="file" id="fileInput" style="position:fixed;top:10px;right:10px;">
+
+<script>
+
+// =======================
+// 텍스트 정리
+// =======================
+function cleanText(line) {
+  return line
+    .replace(/<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g, "$1($2)")
+    .replace(/<[^>]*>/g, "")
+    .replace(/[▼■]/g, "")
+    .replace(/^人物・/, "")
+    .replace(/用語・/g, "")
+    .trim();
+}
+
+// =======================
+function removeComments(text) {
+  return text.replace(/<!--[\s\S]*?-->/g, "");
+}
+
+// =======================
+function isDirective(line) {
+  return (
+    line.startsWith("効果音") ||
+    line.startsWith("カットイン") ||
+    line.startsWith("時間待ち") ||
+    line.startsWith("曲") ||
+    line.startsWith("背景") ||
+    line.startsWith("ループ効果音") ||
+    line.startsWith("ループエフェクト") ||
+    line.startsWith("背景フィルタ") ||
+    line.startsWith("表情")
+  );
+}
+
+// =======================
+function shouldHideDirective(text) {
+  return (
+    text.startsWith("時間待ち") ||
+    text.startsWith("効果音") ||
+    text.startsWith("ループ効果音") ||
+    text.startsWith("曲") ||
+    text.startsWith("表情")
+  );
+}
+
+// =======================
+function pushDialogue(arr, speaker, buffer) {
+  if (!buffer.length) return;
+
+  arr.push({
+    type: "dialogue",
+    speaker,
+    text: buffer.join("\n")
+  });
+
+  buffer.length = 0;
+}
+
+// =======================
+// 파서
+// =======================
+function parse(text) {
+
+  const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+
+  let result = [];
+  let toc = [];
+
+  let currentSpeaker = "";
+  let buffer = [];
+  let eventIndex = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+
+    let line = lines[i];
+
+    // 🔥 완전 제거
+if (
+  line.includes("<画面揺れ再生") ||
+  line.includes("<時間待ち>") ||
+  line.includes("<ト書き>") ||
+  line.includes("<単発音再生>") ||
+  line.includes("<立ち絵表示") ||
+  line.includes("<画面揺れ停止") ||
+  line.includes("<画面揺れ再生") ||  
+  line.includes("<画面揺れ") || 
+  line.includes("<交流背景") ||
+  line.includes("<顔表示>")
+) continue;
+
+    let txt = cleanText(line);
+    if (line.includes("<時間待ち>")) continue;
+
+    // 이벤트 시작
+    if (line.includes("<サブイベント")) {
+      pushDialogue(result, currentSpeaker, buffer);
+
+      const match = line.match(/名前="([^"]+)"/);
+      if (match) {
+        const id = "event_" + eventIndex++;
+
+        result.push({
+          type: "eventTitle",
+          title: match[1],
+          id
+        });
+
+        toc.push({ title: match[1], id });
+      }
+      continue;
+    }
+
+    // 이벤트 종료
+    if (line.includes("</サブイベント>")) {
+      pushDialogue(result, currentSpeaker, buffer);
+      result.push({ type: "eventEnd" });
+      continue;
+    }
+
+    // 화자
+    if (line.startsWith("<話者>")) {
+      pushDialogue(result, currentSpeaker, buffer);
+      currentSpeaker = cleanText(line);
+      continue;
+    }
+
+    // 선택지
+    if (line.startsWith("<選択肢実行>")) {
+
+      pushDialogue(result, currentSpeaker, buffer);
+
+      let choices = [];
+      i++;
+
+      while (i < lines.length && !lines[i].includes("</選択肢実行>")) {
+
+        if (lines[i].includes("<場合>")) {
+
+          let content = [];
+          let subSpeaker = currentSpeaker;
+          let subBuffer = [];
+          let first = true;
+
+          i++;
+
+          while (i < lines.length && !lines[i].includes("</場合>")) {
+
+            let l = lines[i];
+
+            if (
+              l.includes("<ト書き>") ||
+              l.includes("<単発音再生>") ||
+              l.includes("<立ち絵表示") ||
+              l.includes("<顔表示>")
+            ) {
+              i++;
+              continue;
+            }
+
+            let t = cleanText(l);
+
+            if (l.startsWith("<話者>")) {
+
+              if (subBuffer.length) {
+                content.push({
+                  type: "dialogue",
+                  speaker: subSpeaker,
+                  text: subBuffer.join("\n")
+                });
+                subBuffer = [];
+              }
+
+              subSpeaker = cleanText(l);
+            }
+
+            else if (t) {
+
+              if (first) {
+                content.push({ type: "choiceMain", text: t });
+                first = false;
+              } else {
+                subBuffer.push(t);
+              }
+            }
+
+            i++;
+          }
+
+          if (subBuffer.length) {
+            content.push({
+              type: "dialogue",
+              speaker: subSpeaker,
+              text: subBuffer.join("\n")
+            });
+          }
+
+          choices.push({ content });
+        }
+
+        i++;
+      }
+
+      result.push({ type: "choice", options: choices });
+      continue;
+    }
+
+    // 지시문
+    if (isDirective(txt)) {
+      if (shouldHideDirective(txt)) continue;
+
+      pushDialogue(result, currentSpeaker, buffer);
+
+      result.push({
+        type: "directive",
+        text: txt
+      });
+
+      continue;
+    }
+
+    // 일반 대사
+if (txt && currentSpeaker) {
+  buffer.push(txt);
+}
+  }
+
+  pushDialogue(result, currentSpeaker, buffer);
+
+  return { data: result, toc };
+}
+
+// =======================
+// 렌더
+// =======================
+function render(parsed) {
+
+  const viewer = document.getElementById("viewer");
+  const tocDiv = document.getElementById("toc");
+
+  viewer.innerHTML = "";
+  tocDiv.innerHTML = "";
+
+  // 목차
+  parsed.toc.forEach(item => {
+    const el = document.createElement("div");
+    el.style.cursor = "pointer";
+    el.style.color = "#6cf";
+    el.innerText = item.title.replace(/^イベント・[^・]+・?/, "");
+
+    el.onclick = () => {
+      document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    tocDiv.appendChild(el);
+  });
+
+let lastSpeaker = null;
+
+  parsed.data.forEach(block => {
+
+    if (block.type === "eventTitle") {
+      viewer.innerHTML += `<div id="${block.id}" style="color:#ffd700;margin:20px 0;">📌 ${block.title}</div>`;
+      return;
+    }
+
+    if (block.type === "eventEnd") {
+      viewer.innerHTML += `<br><hr><br>`;
+      return;
+    }
+
+    if (block.type === "dialogue") {
+
+      let speakerHTML = "";
+
+      if (block.speaker && block.speaker !== lastSpeaker) {
+        speakerHTML = `<div class="speaker">${block.speaker}</div>`;
+        lastSpeaker = block.speaker;
+      }
+
+      viewer.innerHTML += `
+        <div class="block">
+          ${speakerHTML}
+          <div>${block.text.replace(/\n/g,"<br>")}</div>
+        </div>
+      `;
+      return;
+    }
+
+    if (block.type === "choice") {
+
+      const container = document.createElement("div");
+      container.className = "choice-container";
+      container.style.gridTemplateColumns = `repeat(${block.options.length},1fr)`;
+
+      block.options.forEach(opt => {
+
+        const c = document.createElement("div");
+        c.className = "choice";
+
+        let last = "";
+        let html = "";
+
+        opt.content.forEach(item => {
+
+          if (item.type === "choiceMain") {
+            html += `<div style="color:#ffd700;font-weight:bold;">▶ ${item.text}</div>`;
+          }
+
+          if (item.type === "dialogue") {
+
+            let speakerHTML = "";
+
+            if (item.speaker && item.speaker !== last) {
+              speakerHTML = `<div class="speaker">${item.speaker}</div>`;
+              last = item.speaker;
+            }
+
+            html += `
+              <div>
+                ${speakerHTML}
+                <div>${item.text.replace(/\n/g,"<br>")}</div>
+              </div>
+            `;
+          }
+
+        });
+
+        c.innerHTML = html;
+        container.appendChild(c);
+      });
+
+      viewer.appendChild(container);
+    }
+
+  });
+}
+
+// =======================
+// 실행
+// =======================
+document.getElementById("fileInput").addEventListener("change", e => {
+
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(evt) {
+    const raw = removeComments(evt.target.result);
+    const parsed = parse(raw);
+    render(parsed);
+  };
+
+  reader.readAsText(file, "utf-8");
+});
+
+</script>
+</body>
+</html>
