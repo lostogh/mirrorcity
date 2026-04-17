@@ -122,7 +122,7 @@ async function loadScript() {
       container.appendChild(overBox);
     }
 
-    // ✅ 선택지: 카드 바로 아래에 붙이도록 반복문 안에서 처리
+    // 선택지
     if (line.choices && line.choices.length > 0) {
       const choiceBox = document.createElement("div");
       choiceBox.className = "choice-box";
