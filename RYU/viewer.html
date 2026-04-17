@@ -396,9 +396,16 @@ function parse(text){
       continue;
     }
 
-    if(txt && currentSpeaker){
-      buffer.push(txt);
-    }
+if(txt){
+
+  // 🔥 화자 없으면 자동 설정 (나레이션 대응)
+  if(!currentSpeaker){
+    currentSpeaker = " ";
+  }
+
+  buffer.push(txt);
+}
+
   }
 
   pushDialogue(result,currentSpeaker,buffer);
