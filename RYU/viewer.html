@@ -2,10 +2,9 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scenario Viewer Pro - Multi Mode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Scenario Viewer Pro</title>
 <style>
-  /* 1. 기본 색상 변수 (다크 모드 기준) */
   :root {
     --bg-color: #111;
     --text-color: #eee;
@@ -18,8 +17,6 @@
     --border-color: #333;
     --topbar-bg: #000;
   }
-
-  /* 2. 라이트 모드 색상 변수 */
   :root.light-mode {
     --bg-color: #f5f5f5;
     --text-color: #222;
@@ -37,63 +34,57 @@
     margin: 0; display: flex; flex-direction: column; 
     background: var(--bg-color); color: var(--text-color); 
     font-family: sans-serif; height: 100vh; overflow: hidden;
-    transition: background 0.3s, color 0.3s; /* 부드러운 전환 */
   }
 
-  #topbar { 
-    display: flex; height: 45px; background: var(--topbar-bg); 
-    border-bottom: 1px solid var(--border-color); z-index: 100; 
-  }
-  #topbar button { 
-    flex: 1; background: none; color: var(--text-color); 
-    border: none; cursor: pointer; font-size: 14px; 
-  }
-  #topbar button:hover { background: var(--directive-bg); }
+  #topbar { display: flex; height: 45px; background: var(--topbar-bg); border-bottom: 1px solid var(--border-color); z-index: 100; }
+  #topbar button { flex: 1; background: none; color: var(--text-color); border: none; cursor: pointer; font-size: 14px; }
 
   #container { display: flex; flex: 1; overflow: hidden; }
-  #fileList { 
-    width: 240px; background: var(--choice-bg); 
-    border-right: 1px solid var(--border-color); overflow-y: auto; 
-  }
+  #fileList { width: 240px; background: var(--choice-bg); border-right: 1px solid var(--border-color); overflow-y: auto; }
   #fileList.hidden { display: none; }
-  .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; font-size: 13px; }
-  .file-item:hover { background: var(--choice-hover); }
+  .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
 
-  #main { flex: 1; display: flex; flex-direction: column; }
-  #toc { 
-    max-height: 100px; overflow-y: auto; background: var(--choice-bg); 
-    border-bottom: 1px solid var(--border-color); padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; 
-  }
+  #main { flex: 1; display: flex; flex-direction: column; position: relative; }
+  #toc { max-height: 100px; overflow-y: auto; background: var(--choice-bg); border-bottom: 1px solid var(--border-color); padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
   #toc.hidden { display: none; }
   #toc div { background: var(--choice-hover); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--accent-color); cursor: pointer; }
 
-/* 본문 뷰어 하단 여백 강화 */
-#viewer {
-  flex: 1;
-  padding: 30px 25px; /* 좌우 여백도 살짝 조정 */
-  /* 환경 변수를 이용해 모바일 홈 바 공간 확보 + 기본 여유분 50px */
-  padding-bottom: calc(50px + env(safe-area-inset-bottom)); 
-  overflow-y: auto;
-  line-height: 1.8;
-  /* 스크롤 시 부드럽게 */
-  scroll-behavior: smooth;
-}
+  /* 뷰어 영역 하단 여백 보강 */
+  #viewer { 
+    flex: 1; 
+    padding: 20px 20px calc(80px + env(safe-area-inset-bottom)); 
+    overflow-y: auto; 
+    line-height: 1.8;
+    /* 줄바꿈과 공백 보존 */
+    white-space: pre-wrap; 
+    word-break: break-all;
+  }
 
-/* 선택지 내부의 마지막 콘텐츠도 하단 바에 가리지 않게 여유분 추가 */
-.choice-content {
-  padding: 20px;
-  padding-bottom: calc(30px + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--border-color);
-}
+  /* 화자 이름 표시 */
+  .speaker { 
+    color: var(--accent-color); 
+    font-weight: bold; 
+    margin-top: 25px; 
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    display: block;
+  }
+
+  /* 대사 블록 간격 */
+  .block { 
+    margin-bottom: 15px; 
+    display: block;
+  }
 
   .directive { 
     color: var(--directive-color); font-size: 13px; background: var(--directive-bg); 
-    border-left: 3px solid var(--accent-color); padding: 5px 12px; margin: 10px 0; 
+    border-left: 3px solid var(--accent-color); padding: 8px 12px; margin: 15px 0; 
+    font-style: normal;
   }
 
-  .choice-details { border: 1px solid var(--border-color); border-radius: 8px; margin: 20px 0; overflow: hidden; background: var(--choice-bg); }
+  .choice-details { border: 1px solid var(--border-color); border-radius: 8px; margin: 25px 0; overflow: hidden; background: var(--choice-bg); }
   .choice-summary { padding: 15px; color: var(--highlight); font-weight: bold; cursor: pointer; list-style: none; background: var(--choice-hover); }
-  .choice-content { padding: 20px; border-top: 1px solid var(--border-color); }
+  .choice-content { padding: 20px 20px calc(40px + env(safe-area-inset-bottom)); border-top: 1px solid var(--border-color); }
 
   @media (max-width: 768px) { #fileList { position: fixed; left: -100%; top: 45px; height: 100%; z-index: 10; transition: 0.3s; background: var(--bg-color); } #fileList.open { left: 0; } }
 </style>
@@ -121,39 +112,27 @@ let currentFile = new URLSearchParams(location.search).get("file");
 let isDarkMode = true;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 시스템 테마 감지
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    toggleTheme(); // 라이트 모드라면 전환
-  }
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) toggleTheme();
   loadFileList();
 });
 
-// 테마 전환 함수
 function toggleTheme() {
   isDarkMode = !isDarkMode;
   const root = document.documentElement;
   const btn = document.getElementById("btnTheme");
-  
-  if (isDarkMode) {
-    root.classList.remove("light-mode");
-    btn.innerText = "🌙 다크";
-  } else {
-    root.classList.add("light-mode");
-    btn.innerText = "☀️ 라이트";
-  }
+  if (isDarkMode) { root.classList.remove("light-mode"); btn.innerText = "🌙 다크"; }
+  else { root.classList.add("light-mode"); btn.innerText = "☀️ 라이트"; }
 }
 
+/* 지시어 판별 로직 */
 function isDirective(t) {
-  const keywords = ["表情・", "効果音", "背景", "衣装・", "時間待ち", "カット", "曲・", "SE", "BGM", "Wait", "演出", "ス틸", "에펙트", "현재지"];
+  const keywords = ["表情・", "効果音", "背景", "衣装・", "時間待ち", "カット", "曲・", "SE", "BGM", "Wait", "演出", "스틸", "에펙트", "현재지"];
   const patterns = [/^[\w]+\.[\w]+$/, /·.*·/, /-->/, /^∂∂/];
-  const isKeywordMatch = keywords.some(k => t.includes(k));
-  const isPatternMatch = patterns.some(p => p.test(t));
-  if (isKeywordMatch || isPatternMatch) return true;
+  if (keywords.some(k => t.includes(k)) || patterns.some(p => p.test(t))) return true;
   if (t.includes("「") || t.includes("」") || t.includes("（") || t.includes("）")) return false;
   return false;
 }
 
-// --- 이하 기존 로직 (동일) ---
 async function loadFileList() {
   const list = document.getElementById("fileList");
   try {
@@ -172,6 +151,7 @@ async function loadFileList() {
 }
 
 async function loadScenario(name) {
+  if (!name) return;
   const res = await fetch("./data/" + encodeURI(name));
   const text = await res.text();
   render(parse(text));
@@ -180,17 +160,48 @@ async function loadScenario(name) {
 function parse(text) {
   const lines = text.split("\n").map(l => l.trim()).filter(l => l);
   let result = [], toc = [], currentSpeaker = "", buffer = [], eventIndex = 0;
-  const pushD = (arr, s, b) => { if(b.length){ arr.push({type:"dialogue", speaker:s, text:b.join("\n")}); b.length=0; }};
+
+  const pushD = (arr, s, b) => { 
+    if(b.length){ 
+      arr.push({type:"dialogue", speaker: s || "", text: b.join("\n")}); 
+      b.length = 0; 
+    }
+  };
 
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i], txt = line.replace(/<[^>]*>/g,"").trim();
+    let line = lines[i];
+    let txt = line.replace(/<[^>]*>/g,"").trim(); // 태그 제거 텍스트
+
     if (/^(用語・|\d+$|-->)/.test(txt)) continue;
+
+    // 이벤트 제목
     const m = line.match(/名前="([^"]+)"/);
-    if (m) { pushD(result, currentSpeaker, buffer); const id = "evt_"+eventIndex++; result.push({type:"eventTitle", title:m[1], id}); toc.push({title:m[1], id}); continue; }
-    if (line.includes("<話者>") || txt.startsWith("人物・")) { pushD(result, currentSpeaker, buffer); currentSpeaker = txt.replace("人物・",""); continue; }
-    if (isDirective(txt)) { pushD(result, currentSpeaker, buffer); result.push({type:"directive", text:txt}); continue; }
-    if (line.startsWith("<選択肢実行>")) {
-      pushD(result, currentSpeaker, buffer); let choices = []; i++;
+    if (m) {
+      pushD(result, currentSpeaker, buffer);
+      const id = "evt_"+eventIndex++;
+      result.push({type:"eventTitle", title:m[1], id});
+      toc.push({title:m[1], id});
+      continue;
+    }
+
+    // 화자 판별 (태그 형태 또는 키워드 형태)
+    if (line.includes("<話者>") || line.includes("人物・")) {
+      pushD(result, currentSpeaker, buffer);
+      currentSpeaker = txt.replace("人物・", "").replace("<話者>", "").trim();
+      continue;
+    }
+
+    // 지시어 판별
+    if (isDirective(txt)) {
+      pushD(result, currentSpeaker, buffer);
+      result.push({type:"directive", text:txt});
+      continue;
+    }
+
+    // 선택지
+    if (line.includes("<選択肢実行>")) {
+      pushD(result, currentSpeaker, buffer);
+      let choices = []; i++;
       while (i < lines.length && !lines[i].includes("</選択肢実行>")) {
         if (lines[i].includes("<場合")) {
           let opt = { title: "", content: [] }, subS = currentSpeaker, subB = []; i++;
@@ -198,16 +209,23 @@ function parse(text) {
             let t = lines[i].replace(/<[^>]*>/g,"").trim();
             if (t) {
               if (!opt.title && !lines[i].includes("人物・")) opt.title = t;
-              else if (lines[i].includes("人物・")) { pushD(opt.content, subS, subB); subS = t.replace("人物・",""); }
-              else if (isDirective(t)) { pushD(opt.content, subS, subB); opt.content.push({type:"directive", text:t}); }
-              else subB.push(t);
+              else if (lines[i].includes("人物・") || lines[i].includes("<話者>")) {
+                pushD(opt.content, subS, subB);
+                subS = t.replace("人物・","").replace("<話者>","").trim();
+              } else if (isDirective(t)) {
+                pushD(opt.content, subS, subB);
+                opt.content.push({type:"directive", text:t});
+              } else subB.push(t);
             } i++;
           }
           pushD(opt.content, subS, subB); choices.push(opt);
         } i++;
       }
-      result.push({type:"choice", options:choices}); continue;
+      result.push({type:"choice", options:choices});
+      continue;
     }
+
+    // 일반 대사 버퍼링
     if (txt) buffer.push(txt);
   }
   pushD(result, currentSpeaker, buffer);
@@ -218,31 +236,55 @@ function render(parsed) {
   const viewer = document.getElementById("viewer");
   const tocDiv = document.getElementById("toc");
   viewer.innerHTML = ""; tocDiv.innerHTML = "";
+
   parsed.toc.forEach(item => {
     const el = document.createElement("div"); el.innerText = item.title;
     el.onclick = () => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
     tocDiv.appendChild(el);
   });
+
   let lastS = null;
   parsed.data.forEach(block => {
-    if (block.type === "eventTitle") { viewer.innerHTML += `<h2 id="${block.id}" style="color:var(--highlight);">📌 ${block.title}</h2>`; lastS = null; }
-    else if (block.type === "directive") { if (showDirectives) viewer.innerHTML += `<div class="directive">⚙ ${block.text}</div>`; }
+    if (block.type === "eventTitle") { 
+      viewer.innerHTML += `<h2 id="${block.id}" style="color:var(--highlight); margin-top:40px;">📌 ${block.title}</h2>`; 
+      lastS = null; 
+    }
+    else if (block.type === "directive") { 
+      if (showDirectives) viewer.innerHTML += `<div class="directive">⚙ ${block.text}</div>`; 
+    }
     else if (block.type === "dialogue") {
-      let sH = (block.speaker !== lastS && block.speaker.trim()) ? `<div class="speaker">${block.speaker}</div>` : "";
-      lastS = block.speaker; viewer.innerHTML += `<div class="block">${sH}<div>${block.text.replace(/\n/g,"<br>")}</div></div>`;
-    } else if (block.type === "choice") {
+      let speakerHTML = "";
+      if (block.speaker && block.speaker !== lastS) {
+        speakerHTML = `<span class="speaker">${block.speaker}</span>`;
+        lastS = block.speaker;
+      }
+      viewer.innerHTML += `<div class="block">${speakerHTML}<div>${block.text}</div></div>`;
+    } 
+    else if (block.type === "choice") {
       block.options.forEach(opt => {
-        const det = document.createElement("details"); det.className = "choice-details";
-        det.innerHTML = `<summary class="choice-summary">${opt.title}</summary><div class="choice-content"></div>`;
-        const contentDiv = det.querySelector(".choice-content"); let subL = null;
+        const det = document.createElement("details"); 
+        det.className = "choice-details";
+        const sum = document.createElement("summary");
+        sum.className = "choice-summary";
+        sum.innerText = opt.title;
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "choice-content";
+        
+        let subL = null;
         opt.content.forEach(c => {
-          if (c.type === "directive" && showDirectives) contentDiv.innerHTML += `<div class="directive">⚙ ${c.text}</div>`;
-          else if (c.type === "dialogue") {
-            let sH = (c.speaker !== subL && c.speaker.trim()) ? `<div class="speaker">${c.speaker}</div>` : "";
-            subL = c.speaker; contentDiv.innerHTML += `<div class="block">${sH}<div>${c.text.replace(/\n/g,"<br>")}</div></div>`;
+          if (c.type === "directive" && showDirectives) {
+            contentDiv.innerHTML += `<div class="directive">⚙ ${c.text}</div>`;
+          } else if (c.type === "dialogue") {
+            let sH = (c.speaker && c.speaker !== subL) ? `<span class="speaker">${c.speaker}</span>` : "";
+            subL = c.speaker;
+            contentDiv.innerHTML += `<div class="block">${sH}<div>${c.text}</div></div>`;
           }
-        }); viewer.appendChild(det);
-      }); lastS = null;
+        });
+        det.appendChild(sum);
+        det.appendChild(contentDiv);
+        viewer.appendChild(det);
+      });
+      lastS = null;
     }
   });
 }
