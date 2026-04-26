@@ -67,9 +67,24 @@
   #toc.hidden { display: none; }
   #toc div { background: var(--choice-hover); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--accent-color); cursor: pointer; }
 
-  #viewer { flex: 1; padding: 30px; overflow-y: auto; line-height: 1.8; }
-  .speaker { color: var(--accent-color); font-weight: bold; margin-top: 15px; font-size: 1.05em; }
-  .block { margin-bottom: 12px; }
+/* 본문 뷰어 하단 여백 강화 */
+#viewer {
+  flex: 1;
+  padding: 30px 25px; /* 좌우 여백도 살짝 조정 */
+  /* 환경 변수를 이용해 모바일 홈 바 공간 확보 + 기본 여유분 50px */
+  padding-bottom: calc(50px + env(safe-area-inset-bottom)); 
+  overflow-y: auto;
+  line-height: 1.8;
+  /* 스크롤 시 부드럽게 */
+  scroll-behavior: smooth;
+}
+
+/* 선택지 내부의 마지막 콘텐츠도 하단 바에 가리지 않게 여유분 추가 */
+.choice-content {
+  padding: 20px;
+  padding-bottom: calc(30px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-color);
+}
 
   .directive { 
     color: var(--directive-color); font-size: 13px; background: var(--directive-bg); 
