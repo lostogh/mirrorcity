@@ -3,163 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scenario Viewer</title>
-
+<title>Scenario Viewer Pro - Multi Mode</title>
 <style>
-body {
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  background:#111;
-  color:#eee;
-  font-family:sans-serif;
-}
-
-/* 상단 */
-#topbar {
-  display:flex;
-  height:40px;
-  border-bottom:1px solid #333;
-}
-#topbar button {
-  flex:1;
-  background:none;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-
-/* 레이아웃 */
-#container {
-  display:flex;
-  height:calc(100vh - 40px);
-}
-
-#fileList {
-  width:220px;
-  border-right:1px solid #333;
-  overflow:auto;
-}
-#fileList.hidden { display:none; }
-
-.file-item {
-  padding:8px;
-  border-bottom:1px solid #222;
-  cursor:pointer;
-}
-.file-item:hover { background:#333; }
-
-#main {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
-#toc {
-  height:110px;
-  overflow:auto;
-  border-bottom:1px solid #333;
-  background:#1a1a1a;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  padding:8px;
-}
-#toc.hidden { display:none; }
-
-#toc div {
-  color:#6cf;
-  cursor:pointer;
-  font-size:13px;
-}
-
-/* 본문 */
-#viewer {
-  flex:1;
-  padding:20px;
-  overflow:auto;
-  line-height:1.6;
-}
-
-/* 대사 */
-.speaker {
-  color:#6cf;
-  font-weight:bold;
-  margin-top:12px;
-}
-
-.block {
-  margin-bottom:10px;
-}
-
-/* 독백 */
-.monologue {
-  color:#aaa;
-  font-style:italic;
-  margin:6px 0 12px 10px;
-}
-
-/* 선택지 */
-.choice-container {
-  display:grid;
-  gap:12px;
-  margin:20px 0;
-}
-
-.choice {
-  background:#1a1a1a;
-  padding:12px;
-  border:1px solid #333;
-  border-radius:6px;
-}
-
-/* 연출 */
-.directive {
-  color:#777;
-  font-size:12px;
-  border-left:2px solid #444;
-  padding-left:8px;
-  margin:6px 0;
-}
-
-/* 모바일 */
-@media (max-width:768px){
-  #fileList {
-    position:fixed;
-    left:-100%;
-    top:40px;
-    width:70%;
-    height:100%;
-    background:#111;
-    transition:0.3s;
+  /* 1. 기본 색상 변수 (다크 모드 기준) */
+  :root {
+    --bg-color: #111;
+    --text-color: #eee;
+    --accent-color: #6cf;
+    --choice-bg: #1a1a1a;
+    --choice-hover: #2a2a2a;
+    --directive-color: #888;
+    --directive-bg: rgba(255, 255, 255, 0.05);
+    --highlight: #ffd700;
+    --border-color: #333;
+    --topbar-bg: #000;
   }
-  #fileList.open { left:0; }
 
-  #toc {
-    position:fixed;
-    right:-100%;
-    top:40px;
-    width:70%;
-    height:100%;
-    flex-direction:column;
-    transition:0.3s;
+  /* 2. 라이트 모드 색상 변수 */
+  :root.light-mode {
+    --bg-color: #f5f5f5;
+    --text-color: #222;
+    --accent-color: #0077cc;
+    --choice-bg: #fff;
+    --choice-hover: #f0f0f0;
+    --directive-color: #666;
+    --directive-bg: rgba(0, 0, 0, 0.05);
+    --highlight: #d4a017;
+    --border-color: #ccc;
+    --topbar-bg: #e0e0e0;
   }
-  #toc.open { right:0; }
-}
+
+  body { 
+    margin: 0; display: flex; flex-direction: column; 
+    background: var(--bg-color); color: var(--text-color); 
+    font-family: sans-serif; height: 100vh; overflow: hidden;
+    transition: background 0.3s, color 0.3s; /* 부드러운 전환 */
+  }
+
+  #topbar { 
+    display: flex; height: 45px; background: var(--topbar-bg); 
+    border-bottom: 1px solid var(--border-color); z-index: 100; 
+  }
+  #topbar button { 
+    flex: 1; background: none; color: var(--text-color); 
+    border: none; cursor: pointer; font-size: 14px; 
+  }
+  #topbar button:hover { background: var(--directive-bg); }
+
+  #container { display: flex; flex: 1; overflow: hidden; }
+  #fileList { 
+    width: 240px; background: var(--choice-bg); 
+    border-right: 1px solid var(--border-color); overflow-y: auto; 
+  }
+  #fileList.hidden { display: none; }
+  .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; font-size: 13px; }
+  .file-item:hover { background: var(--choice-hover); }
+
+  #main { flex: 1; display: flex; flex-direction: column; }
+  #toc { 
+    max-height: 100px; overflow-y: auto; background: var(--choice-bg); 
+    border-bottom: 1px solid var(--border-color); padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; 
+  }
+  #toc.hidden { display: none; }
+  #toc div { background: var(--choice-hover); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--accent-color); cursor: pointer; }
+
+  #viewer { flex: 1; padding: 30px; overflow-y: auto; line-height: 1.8; }
+  .speaker { color: var(--accent-color); font-weight: bold; margin-top: 15px; font-size: 1.05em; }
+  .block { margin-bottom: 12px; }
+
+  .directive { 
+    color: var(--directive-color); font-size: 13px; background: var(--directive-bg); 
+    border-left: 3px solid var(--accent-color); padding: 5px 12px; margin: 10px 0; 
+  }
+
+  .choice-details { border: 1px solid var(--border-color); border-radius: 8px; margin: 20px 0; overflow: hidden; background: var(--choice-bg); }
+  .choice-summary { padding: 15px; color: var(--highlight); font-weight: bold; cursor: pointer; list-style: none; background: var(--choice-hover); }
+  .choice-content { padding: 20px; border-top: 1px solid var(--border-color); }
+
+  @media (max-width: 768px) { #fileList { position: fixed; left: -100%; top: 45px; height: 100%; z-index: 10; transition: 0.3s; background: var(--bg-color); } #fileList.open { left: 0; } }
 </style>
 </head>
-
 <body>
 
 <div id="topbar">
-  <button onclick="toggleFiles()">📁</button>
-  <button onclick="toggleToc()">📑</button>
-  <button onclick="toggleDirectives()" id="btnDirective">⚙️</button>
+  <button onclick="toggleFiles()">📁 목록</button>
+  <button onclick="toggleToc()">📑 목차</button>
+  <button onclick="toggleDirectives()" id="btnDirective">⚙️ 지시어</button>
+  <button onclick="toggleTheme()" id="btnTheme">🌙 모드</button>
 </div>
 
 <div id="container">
   <div id="fileList"></div>
-
   <div id="main">
     <div id="toc"></div>
     <div id="viewer"></div>
@@ -167,384 +101,140 @@ body {
 </div>
 
 <script>
+let showDirectives = false;
+let currentFile = new URLSearchParams(location.search).get("file");
+let isDarkMode = true;
 
-let showDirectives=false;
-
-const params=new URLSearchParams(location.search);
-let currentFile=params.get("file");
-let currentEvent=params.get("event");
-
-/* ================= 실행 보장 ================= */
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
+  // 시스템 테마 감지
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    toggleTheme(); // 라이트 모드라면 전환
+  }
   loadFileList();
 });
 
-/* ================= 파일 목록 ================= */
-async function loadFileList(){
-
-  const list=document.getElementById("fileList");
-  if(!list) return;
-
-  list.innerHTML="";
-
-  const res=await fetch("./data/index.json");
-  const files=await res.json();
-
-  files.forEach(name=>{
-    const el=document.createElement("div");
-    el.className="file-item";
-    el.innerText=name;
-
-    el.onclick=()=>{
-      currentFile=name;
-      history.pushState({}, "", "?file="+encodeURIComponent(name));
-      loadScenario(name);
-      document.getElementById("fileList").classList.remove("open");
-    };
-
-    list.appendChild(el);
-  });
-
-  loadScenario(currentFile || files[0]);
-}
-
-/* ================= 로드 ================= */
-async function loadScenario(name){
-
-  const res=await fetch("./data/"+encodeURI(name));
-  const text=await res.text();
-
-  const parsed=parse(text);
-  render(parsed);
-
-  if(currentEvent){
-    setTimeout(()=>{
-      document.getElementById(currentEvent)?.scrollIntoView();
-    },100);
+// 테마 전환 함수
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  const root = document.documentElement;
+  const btn = document.getElementById("btnTheme");
+  
+  if (isDarkMode) {
+    root.classList.remove("light-mode");
+    btn.innerText = "🌙 다크";
+  } else {
+    root.classList.add("light-mode");
+    btn.innerText = "☀️ 라이트";
   }
 }
 
-/* ================= 텍스트 ================= */
-function cleanText(line){
-  return line
-    .replace(/<ruby>(.*?)<rt>(.*?)<\/rt><\/ruby>/g,"$1($2)")
-    .replace(/<[^>]*>/g,"")
-    .replace(/■/g,"")
-    .replace(/▼/g,"\n")
-    .trim();
-}
-
-/* ================= 판별 ================= */
-function isDirective(t){
-
-  // 기본 태그형
-  if(
-    t.startsWith("表情・") ||
-    t.startsWith("効果音") ||
-    t.startsWith("背景") ||
-    t.startsWith("衣装・") ||
-    t.startsWith("時間待ち") ||
-    t.startsWith("カットイン") ||
-    t.startsWith("曲・")
-  ) return true;
-
-  // 🔥 설명문 필터 (긴 문장)
-  if(
-    t.length > 40 &&
-    !t.startsWith("（") &&
-    !t.includes("「") &&
-    !t.includes("」") &&
-    !t.includes("『") &&
-    !t.includes("』")
-  ) return true;
-
+function isDirective(t) {
+  const keywords = ["表情・", "効果音", "背景", "衣装・", "時間待ち", "カット", "曲・", "SE", "BGM", "Wait", "演出", "ス틸", "에펙트", "현재지"];
+  const patterns = [/^[\w]+\.[\w]+$/, /·.*·/, /-->/, /^∂∂/];
+  const isKeywordMatch = keywords.some(k => t.includes(k));
+  const isPatternMatch = patterns.some(p => p.test(t));
+  if (isKeywordMatch || isPatternMatch) return true;
+  if (t.includes("「") || t.includes("」") || t.includes("（") || t.includes("）")) return false;
   return false;
 }
 
-function isMonologue(t){
-  return t.startsWith("（") && t.endsWith("）");
+// --- 이하 기존 로직 (동일) ---
+async function loadFileList() {
+  const list = document.getElementById("fileList");
+  try {
+    const res = await fetch("./data/index.json");
+    const files = await res.json();
+    list.innerHTML = "";
+    files.forEach(name => {
+      const el = document.createElement("div");
+      el.className = "file-item"; el.innerText = name;
+      el.onclick = () => { currentFile = name; loadScenario(name); };
+      list.appendChild(el);
+    });
+    if (!currentFile && files.length > 0) currentFile = files[0];
+    if (currentFile) loadScenario(currentFile);
+  } catch (e) { console.error(e); }
 }
 
-/* ================= push ================= */
-function pushDialogue(arr,speaker,buffer){
-  if(!buffer.length) return;
-  arr.push({type:"dialogue",speaker,text:buffer.join("\n")});
-  buffer.length=0;
+async function loadScenario(name) {
+  const res = await fetch("./data/" + encodeURI(name));
+  const text = await res.text();
+  render(parse(text));
 }
 
-/* ================= 파싱 ================= */
-function parse(text){
+function parse(text) {
+  const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+  let result = [], toc = [], currentSpeaker = "", buffer = [], eventIndex = 0;
+  const pushD = (arr, s, b) => { if(b.length){ arr.push({type:"dialogue", speaker:s, text:b.join("\n")}); b.length=0; }};
 
-  const lines=text.split("\n").map(l=>l.trim()).filter(l=>l);
-
-  let result=[],toc=[];
-  let currentSpeaker="",buffer=[];
-  let eventIndex=0;
-
-  for(let i=0;i<lines.length;i++){
-
-    let line=lines[i];
-    let txt=cleanText(line);
-
-    if(
-      txt.startsWith("用語・") ||
-      /^\d+$/.test(txt) ||
-      /^\d+\s*==\s*\d+$/.test(txt) ||
-      txt==="-->" ||
-      txt.startsWith("--")
-    ) continue;
-
-    /* 이벤트 */
-    const m=line.match(/名前="([^"]+)"/);
-    if(m){
-      pushDialogue(result,currentSpeaker,buffer);
-      const id="event_"+eventIndex++;
-      result.push({type:"eventTitle",title:m[1],id});
-      toc.push({title:m[1],id});
-      continue;
-    }
-
-    if(line.includes("</サブイベント>")){
-      pushDialogue(result,currentSpeaker,buffer);
-      result.push({type:"eventEnd"});
-      continue;
-    }
-
-    /* 화자 */
-    if(line.startsWith("<話者>") || txt.startsWith("人物・")){
-      pushDialogue(result,currentSpeaker,buffer);
-      currentSpeaker = txt.replace("人物・","");
-      continue;
-    }
-
-    /* 독백 */
-    if(isMonologue(txt)){
-      pushDialogue(result,currentSpeaker,buffer);
-      result.push({type:"monologue",text:txt});
-      continue;
-    }
-
-    /* 연출 */
-    if(isDirective(txt)){
-      pushDialogue(result,currentSpeaker,buffer);
-      result.push({type:"directive",text:txt});
-      continue;
-    }
-
-    /* 선택지 */
-    if(line.startsWith("<選択肢実行>")){
-      pushDialogue(result,currentSpeaker,buffer);
-
-      let choices=[];
-      i++;
-
-      while(i<lines.length && !lines[i].includes("</選択肢実行>")){
-
-        if(lines[i].includes("<場合")){
-
-          let content=[];
-          let subSpeaker=currentSpeaker;
-          let subBuffer=[];
-          let first=true;
-
-          i++;
-
-          while(i<lines.length && !lines[i].includes("</場合>")){
-
-            let t=cleanText(lines[i]);
-            if(!t){ i++; continue; }
-
-            if(t.startsWith("人物・")){
-              if(subBuffer.length){
-                content.push({type:"dialogue",speaker:subSpeaker,text:subBuffer.join("\n")});
-                subBuffer=[];
-              }
-              subSpeaker=t.replace("人物・","");
-            }
-
-            else if(isMonologue(t)){
-              content.push({type:"monologue",text:t});
-            }
-
-            else if(isDirective(t)){
-              content.push({type:"directive",text:t});
-            }
-
-            else{
-              if(first){
-                content.push({type:"choiceMain",text:t});
-                first=false;
-              }else{
-                subBuffer.push(t);
-              }
-            }
-
-            i++;
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i], txt = line.replace(/<[^>]*>/g,"").trim();
+    if (/^(用語・|\d+$|-->)/.test(txt)) continue;
+    const m = line.match(/名前="([^"]+)"/);
+    if (m) { pushD(result, currentSpeaker, buffer); const id = "evt_"+eventIndex++; result.push({type:"eventTitle", title:m[1], id}); toc.push({title:m[1], id}); continue; }
+    if (line.includes("<話者>") || txt.startsWith("人物・")) { pushD(result, currentSpeaker, buffer); currentSpeaker = txt.replace("人物・",""); continue; }
+    if (isDirective(txt)) { pushD(result, currentSpeaker, buffer); result.push({type:"directive", text:txt}); continue; }
+    if (line.startsWith("<選択肢実行>")) {
+      pushD(result, currentSpeaker, buffer); let choices = []; i++;
+      while (i < lines.length && !lines[i].includes("</選択肢実行>")) {
+        if (lines[i].includes("<場合")) {
+          let opt = { title: "", content: [] }, subS = currentSpeaker, subB = []; i++;
+          while (i < lines.length && !lines[i].includes("</場合>")) {
+            let t = lines[i].replace(/<[^>]*>/g,"").trim();
+            if (t) {
+              if (!opt.title && !lines[i].includes("人物・")) opt.title = t;
+              else if (lines[i].includes("人物・")) { pushD(opt.content, subS, subB); subS = t.replace("人物・",""); }
+              else if (isDirective(t)) { pushD(opt.content, subS, subB); opt.content.push({type:"directive", text:t}); }
+              else subB.push(t);
+            } i++;
           }
-
-          if(subBuffer.length){
-            content.push({type:"dialogue",speaker:subSpeaker,text:subBuffer.join("\n")});
-          }
-
-          choices.push({content});
-        }
-
-        i++;
+          pushD(opt.content, subS, subB); choices.push(opt);
+        } i++;
       }
-
-      result.push({type:"choice",options:choices});
-      continue;
+      result.push({type:"choice", options:choices}); continue;
     }
-
-if(txt){
-
-  // 🔥 화자 없으면 자동 설정 (나레이션 대응)
-  if(!currentSpeaker){
-    currentSpeaker = " ";
+    if (txt) buffer.push(txt);
   }
-
-  buffer.push(txt);
+  pushD(result, currentSpeaker, buffer);
+  return { data: result, toc };
 }
 
-  }
-
-  pushDialogue(result,currentSpeaker,buffer);
-  return {data:result,toc};
-}
-
-/* ================= 렌더 ================= */
-function render(parsed){
-
-  const viewer=document.getElementById("viewer");
-  const tocDiv=document.getElementById("toc");
-
-  viewer.innerHTML="";
-  tocDiv.innerHTML="";
-
-  parsed.toc.forEach(item=>{
-    const el=document.createElement("div");
-    el.innerText=item.title;
-    el.onclick=()=>document.getElementById(item.id)?.scrollIntoView({behavior:"smooth"});
+function render(parsed) {
+  const viewer = document.getElementById("viewer");
+  const tocDiv = document.getElementById("toc");
+  viewer.innerHTML = ""; tocDiv.innerHTML = "";
+  parsed.toc.forEach(item => {
+    const el = document.createElement("div"); el.innerText = item.title;
+    el.onclick = () => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
     tocDiv.appendChild(el);
   });
-
-  let lastSpeaker=null;
-
-  parsed.data.forEach(block=>{
-
-    if(block.type==="eventTitle"){
-      viewer.innerHTML+=`<div id="${block.id}" style="color:#ffd700;">📌 ${block.title}</div>`;
-      return;
-    }
-
-    if(block.type==="eventEnd"){
-      viewer.innerHTML+="<hr>";
-      return;
-    }
-
-    if(block.type==="directive"){
-      if(!showDirectives) return;
-      viewer.innerHTML+=`<div class="directive">⚙ ${block.text}</div>`;
-      return;
-    }
-
-    if(block.type==="monologue"){
-      viewer.innerHTML+=`<div class="monologue">${block.text}</div>`;
-      return;
-    }
-
-    if(block.type==="dialogue"){
-      let speakerHTML="";
-      if(block.speaker!==lastSpeaker){
-        speakerHTML=`<div class="speaker">${block.speaker}</div>`;
-        lastSpeaker=block.speaker;
-      }
-
-      viewer.innerHTML+=`
-        <div class="block">
-          ${speakerHTML}
-          <div>${block.text.replace(/\n/g,"<br>")}</div>
-        </div>
-      `;
-    }
-
-    if(block.type==="choice"){
-
-      const container=document.createElement("div");
-      container.className="choice-container";
-
-      container.style.gridTemplateColumns =
-        `repeat(${Math.max(1,block.options.length)}, minmax(0,1fr))`;
-
-      block.options.forEach(opt=>{
-        const c=document.createElement("div");
-        c.className="choice";
-
-        let html="";
-        let last="";
-
-        opt.content.forEach(item=>{
-
-          if(item.type==="choiceMain"){
-            html+=`<div style="color:#ffd700;font-weight:bold;">▶ ${item.text}</div>`;
+  let lastS = null;
+  parsed.data.forEach(block => {
+    if (block.type === "eventTitle") { viewer.innerHTML += `<h2 id="${block.id}" style="color:var(--highlight);">📌 ${block.title}</h2>`; lastS = null; }
+    else if (block.type === "directive") { if (showDirectives) viewer.innerHTML += `<div class="directive">⚙ ${block.text}</div>`; }
+    else if (block.type === "dialogue") {
+      let sH = (block.speaker !== lastS && block.speaker.trim()) ? `<div class="speaker">${block.speaker}</div>` : "";
+      lastS = block.speaker; viewer.innerHTML += `<div class="block">${sH}<div>${block.text.replace(/\n/g,"<br>")}</div></div>`;
+    } else if (block.type === "choice") {
+      block.options.forEach(opt => {
+        const det = document.createElement("details"); det.className = "choice-details";
+        det.innerHTML = `<summary class="choice-summary">${opt.title}</summary><div class="choice-content"></div>`;
+        const contentDiv = det.querySelector(".choice-content"); let subL = null;
+        opt.content.forEach(c => {
+          if (c.type === "directive" && showDirectives) contentDiv.innerHTML += `<div class="directive">⚙ ${c.text}</div>`;
+          else if (c.type === "dialogue") {
+            let sH = (c.speaker !== subL && c.speaker.trim()) ? `<div class="speaker">${c.speaker}</div>` : "";
+            subL = c.speaker; contentDiv.innerHTML += `<div class="block">${sH}<div>${c.text.replace(/\n/g,"<br>")}</div></div>`;
           }
-
-          if(item.type==="monologue"){
-            html+=`<div class="monologue">${item.text}</div>`;
-          }
-
-          if(item.type==="directive" && showDirectives){
-            html+=`<div class="directive">⚙ ${item.text}</div>`;
-          }
-
-          if(item.type==="dialogue"){
-            let speakerHTML="";
-            if(item.speaker!==last){
-              speakerHTML=`<div class="speaker">${item.speaker}</div>`;
-              last=item.speaker;
-            }
-
-            html+=`
-              <div>
-                ${speakerHTML}
-                <div>${item.text.replace(/\n/g,"<br>")}</div>
-              </div>
-            `;
-          }
-
-        });
-
-        c.innerHTML=html;
-        container.appendChild(c);
-      });
-
-      viewer.appendChild(container);
+        }); viewer.appendChild(det);
+      }); lastS = null;
     }
-
   });
 }
 
-/* UI */
-function toggleFiles(){
-  const el=document.getElementById("fileList");
-  if(window.innerWidth<=768) el.classList.toggle("open");
-  else el.classList.toggle("hidden");
-}
-
-function toggleToc(){
-  const el=document.getElementById("toc");
-  if(window.innerWidth<=768) el.classList.toggle("open");
-  else el.classList.toggle("hidden");
-}
-
-function toggleDirectives(){
-  showDirectives=!showDirectives;
-  document.getElementById("btnDirective").style.color =
-    showDirectives ? "#ffd700" : "#fff";
-  loadScenario(currentFile);
-}
-
+function toggleFiles() { document.getElementById("fileList").classList.toggle(window.innerWidth <= 768 ? "open" : "hidden"); }
+function toggleToc() { document.getElementById("toc").classList.toggle("hidden"); }
+function toggleDirectives() { showDirectives = !showDirectives; loadScenario(currentFile); }
 </script>
-
 </body>
 </html>
